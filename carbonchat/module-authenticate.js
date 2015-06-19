@@ -59,33 +59,9 @@ exports.getCredentials = function getCredentials(){
 					deferred.reject(err);
 				}
 				
-				deferred.resolve(read.authInformation);			//Send back the completed promise to show that we resolved correctly
+				deferred.resolve(read);			//Send back the completed promise to show that we resolved correctly
         } else {
             throw "Authentication credential file does not exist";
-        }
-    } catch (err) {
-        deferred.reject(err.message);
-    }   
-
-    return deferred.promise();
-}
-
-//This will open the credentials file and will get the json object that will represent our device info
-exports.getDeviceInfo = function getDeviceInfo(){
-    var deferred = q.defer();
-    var deviceInfo;
-
-    //gotta check that the file exists
-    try {
-        if (fs.exists(authFilePath, function(exists) {
-            fs.readFile(authFilePath, function(err, read){});
-				if(err){
-					deferred.reject(err);
-				}
-				
-				deferred.resolve(read.deviceInformation);			//Send back the completed promise to show that we resolved correctly
-        } else {
-            throw "Device information does not exist";
         }
     } catch (err) {
         deferred.reject(err.message);

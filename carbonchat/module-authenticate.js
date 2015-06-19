@@ -4,13 +4,15 @@
 
 var q = require('q');
 var Firebase = require('firebase');
+var firebaseRef;
 var fs = requite('fs');
 var authFilePath;
 
 //The initialization of our firebase object.
 //Will perform authentication, get message root directory
-exports.init = function init(){
+exports.init = function init(firebaseObj){
     authFilePath = "authInformation.json";
+	firebaseRef = firebaseObj;					//Set the firebase reference
 }
 
 //This is our authentication function
@@ -20,7 +22,21 @@ exports.authenticate = function authenticate() {
     var error;
 
     try {
-        authCredentials = getCredentials.then();        //Get login credentials 
+        getCredentials.then(function(authCredentials){
+			if(firebaseRef != null){
+				ref.authWithPassword({
+					email: authCredentials.carbonchat.email,
+					password: authCredentials.carbonchat.email 
+				}, function(error, authData){
+					if(error){ deferred.reject(error); }
+					else {
+						deferred.resolve(firebaseRef);
+					}
+				});
+			}else{
+				throw "firebase reference undefined";
+			}
+		});        //Get login credentials 
 
     } catch (err) {
         error = err.message;
@@ -36,14 +52,17 @@ exports.getCredentials = function getCredentials(){
     var credentials;
 
     //gotta check that the file exists
-    //NEED TO FINISH
     try {
         if (fs.exists(authFilePath, function(exists) {
-            fs.read
+            fs.readFile(authFilePath, function(err, read){});
+				if(err){
+					deferred.reject(err);
+				}
+				
+				deferred.resolve(read);			//Send back the completed promise to show that we resolved correctly
         } else {
             throw "Authentication credential file does not exist";
         }
-        deferred.resolve(credentials)
     } catch (err) {
         deferred.reject(err.message);
     }   

@@ -1,0 +1,19 @@
+﻿{
+    "deviceInformation": {
+        "deviceSerial": "123456789"
+    },
+    "authInformation": [
+        {
+            "authProvider": "Facebook",
+            "userName": "larkincrain@gmail.com",
+            "password": "asdasdasdasdasdasd",
+            "active": "true"
+        },
+        {
+            "authProvider": "Google+",
+            "userName": "larkincrain@gmail.com",
+            "password": "asdasdasdasdasdasd",
+            "active": "true"
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "carbonchat",
+  "version": "0.0.0",
+  "description": "carbonchat",
+  "main": "app.js",
+  "author": {
+    "name": "Larkin",
+    "email": ""
+  },
+  "dependencies": {
+    "firebase": "^2.2.7",
+    "q": "^1.4.1",
+    "thermalprinter": "1.4.28"
+  }
+}

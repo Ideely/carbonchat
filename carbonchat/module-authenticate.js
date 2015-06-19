@@ -1,5 +1,5 @@
 ﻿/*
- * The print module, lets make this work for the thermal printer that we bought.
+ * The authentication module, which will authenticate the user with the firebase server from an authentication.json file
  * */
 
 var q = require('q');

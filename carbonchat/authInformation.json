@@ -2,18 +2,10 @@
     "deviceInformation": {
         "deviceSerial": "123456789"
     },
-    "authInformation": [
-        {
-            "authProvider": "Facebook",
-            "userName": "larkincrain@gmail.com",
-            "password": "asdasdasdasdasdasd",
-            "active": "true"
-        },
-        {
-            "authProvider": "Google+",
-            "userName": "larkincrain@gmail.com",
-            "password": "asdasdasdasdasdasd",
-            "active": "true"
-        }
-    ]
+    "authInformation": {
+		"carbonchat": {
+			"email": "larkincrain@gmail.com",
+			"password": "blerg1?"
+		}
+	}
 }

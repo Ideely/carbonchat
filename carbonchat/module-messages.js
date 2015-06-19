@@ -13,15 +13,34 @@ exports.init = function init(firebaseObj){
 }
 
 //This is our function to check for new messages
-exports.getNewMessages = function getNewMessages() {
+exports.getNewMessages = function getNewMessages(conversation) {
     var deferred = q.defer();
     var error;
 
     try {
         if(firebaseRef != null){
-			firebaseRef.startAt().limit(1).once("child_added", function(snapshot){
+			firebaseRef.child("messages").child(converation).startAt().limit(1).once("child_added", function(snapshot){
 				deferred.resolve(snapshot.val());
 			});
+		} else{
+			throw "firebase reference is not instantiated";
+		}
+    } catch (err) {
+        error = err.message;
+        deferred.reject(error);
+    }
+
+    return deferred.promise();
+}
+
+//This is our function that will update the status of the message once it has been successfully printed
+exports.updateMessageStatus = function updateMessageStatus(conversation, message, status){
+	var deferred = q.defer();
+    var error;
+
+    try {
+        if(firebaseRef != null){
+			firebaseRef.child("messages").child(converation).child(message.message_id).child("status").set(status);	
 		} else{
 			throw "firebase reference is not instantiated";
 		}

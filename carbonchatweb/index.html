@@ -4,13 +4,16 @@
     <title>carbonchat</title>
 
     <!-- Scrolls-->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">        <!-- Vanilla Bootstrap CSS-->
-    <link rel="stylesheet" href="resouces/styles/bootstrap-simplex.css" />                                              <!-- Bootstrap Simplex Theme CSS-->
-    <link rel="stylesheet" href="resouces/styles/site.css" />                                                           <!-- Custom CSS-->
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">            <!-- Font Awesome CSS-->
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">            <!-- Vanilla Bootstrap CSS-->
+    <link rel="stylesheet" href="resources/styles/site.css"/>                                                           <!-- Custom CSS-->
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">                <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css"><!-- Angular Materal Design-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic">        <!-- Google fonts-->
 
 </head>
 <body ng-app="carbonchatApp">
+
+    <div ui-view name="banner"></div>
 
     <div ui-view name="nav"></div>
 
@@ -24,16 +27,20 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js"></script>               <!-- Angular JS-->
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.1/angular-route.min.js"></script>                <!-- Angular Routing JS-->
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.8/angular-ui-router.min.js"></script>   <!-- Angular Routing JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script><!-- Angular Material Design-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>       <!-- Angular Animate-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>          <!-- Angular Aria-->
     <script src="https://cdn.firebase.com/js/client/2.2.2/firebase.js"></script>                                <!-- Firebase JS-->
     <script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>                  <!-- AngularFire JS-->
 
     <script src="site_scripts/modules/carbonchatapp.js"></script>                                               <!-- Main Module-->
     <script src="site_scripts/config/routingConfig.js"></script>                                                <!-- Routing Configuration-->
-    <script src="site_scripts/config/appGlobalConfig.js"></script>                                              <!-- Application constants and configuration-->
     <script src="site_scripts/config/appRun.js"></script>                                                       <!-- Application Run Settings-->
 
     <script src="site_scripts/controllers/landingController.js"></script>                                       <!-- Controller: landing page-->
-    <script src="site_scripts/controllers/chattingController.js"></script>                                       <!-- Controller: chatting page-->
+    <script src="site_scripts/controllers/chattingController.js"></script>                                      <!-- Controller: chatting page-->
+    <script src="site_scripts/controllers/navController.js"></script>                                           <!-- Controller: navigation elements-->
+    <script src="site_scripts/controllers/bannerController.js"></script>                                        <!-- Controller: banner elements-->
 </body>
 
 </html>

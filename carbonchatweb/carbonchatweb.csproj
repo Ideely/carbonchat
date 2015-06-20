@@ -67,11 +67,12 @@
   <ItemGroup>
     <Content Include="index.html" />
     <Content Include="resources\styles\site.css" />
-    <Content Include="site_scripts\config\appGlobalConfig.js" />
     <Content Include="site_scripts\config\appRun.js" />
     <Content Include="site_scripts\config\routingConfig.js" />
+    <Content Include="site_scripts\controllers\bannerController.js" />
     <Content Include="site_scripts\controllers\chattingController.js" />
     <Content Include="site_scripts\controllers\landingController.js" />
+    <Content Include="site_scripts\controllers\navController.js" />
     <Content Include="site_scripts\modules\carbonchatapp.js" />
     <Content Include="templates\banner.html" />
     <Content Include="templates\chatting.html" />

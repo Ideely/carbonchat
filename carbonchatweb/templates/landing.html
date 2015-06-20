@@ -1,9 +1,27 @@
-﻿<div>
-    <div>
-        You need to log in, you crazy cat.
+﻿<div class="center">
+    <div class="center-header">
+        <h1 ng-bind="applicationText.name"></h1>
+        <h2 ng-bind="applicationText.url"></h2>
+        <h2 ng-bind="applicationText.slogan"></h2>
+    </div>
 
-        <input type="email" />
-        <input type="password"/>
+    <div class="center-form">
+        You need to log in, you crazy cat.
+        <br />
+
+        <form>
+            <md-input-container>
+                <label>email</label>
+                <input ng-model="user.email" type="email" placeholder="email" required /> <br />
+            </md-input-container>
+
+            <md-input-container>
+                <label>password</label>
+                <input type="password" placeholder="password" ng-model="user.password" required>
+            </md-input-container>
+
+            <md-button class="md-raised md-primary" ng-click="authUser()">Login</md-button>
+        </form>
 
     </div>
 </div>

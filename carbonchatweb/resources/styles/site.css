@@ -8,109 +8,31 @@
     height: 100%;
 }
 
-.landing-background {
-    left: 0%;
-    top: 0%;
-    background-repeat: no-repeat;
-    background-size: cover;
+.center {
     width: 100%;
-    height: 100%;
-}
-.landing-outer {
-    display: -webkit-flex;
-    display:         flex;
-    -webkit-align-items: center;
-            align-items: center;
-    -webkit-justify-content: center;
-            justify-content: center;
-    height: 100%;
-    width: 100%;
-    padding-top: 50px;
+    height: 500px;
+    background-color: #c0c0c0;
 
-
-}
-.landing-inner{
-    padding-left: 10%;
-    padding-right: 10%; 
-    width:100%;
-}
-.landing-content {
-    color: rgba(0, 0, 0, 1.5);
-}
-.landing-input {
-    background: rgba(0, 0, 0, 0);
-    border: none;
-    color: rgba(255, 255, 255, .8);
-    height: 100px;
-    width: 800px;
-    font-size:xx-large;
-    font-size-adjust:initial 5;
-    border: none;
-}
-
-.nav-wrapper {
     position: absolute;
-    width: 100%;
-    background-color: rgba(128,128,128, .5);
-    z-index:99996;
-    font: 300;
-    padding-bottom: 20px;
-}
-.nav-outer {
-    display: -webkit-flex;
-    display:         flex;
-    -webkit-justify-content: center;
-            justify-content: center;
-    height: 100%;
-    width: 100%;
-    /*background: rgba(129, 225, 39, .7);*/
-    z-index:99997;
+    top:-20px;
+    bottom: 0;
+    left: 0;
+    right: 0;
 
-}
-.nav-inner{
-    padding-left: 10%;
-    padding-right: 20%; 
-    width:100%;
-    /*background: rgba(129, 225, 39, .7);*/
-    z-index:99998;
-}
-.nav-content {
-    color: rgba(0, 0, 0, 1.5);
-    z-index:99999;
-    font-size:xx-large;
-    font-size-adjust:initial 5;
-    padding-bottom: 20px;
+    margin: auto;
 }
 
-.input-bar{
-    padding-left: 0%;
-    padding-right: 0%; 
-    /*width:100%; */
-    background: rgba(128, 128, 128, .5);
-}
-
-.input-bar:focus {
-    outline: none;
-}
-
-.skill {
-   /*-webkit-filter: grayscale(100%);*/
-   fill: #000000!important;
-}
-.skill-marked {
-
-}
-
-.btn-action {
-    width: 100%;
-    background-color: #b6ff00;
-    height: 80px;
+.center-header{
     text-align: center;
-    font-size: 40px;
+    margin-left: auto;
+    margin-right: auto;
+
+    width: 50%;
 }
 
-.title {
-    font-size: 60px;
-    color: rgba(0, 0, 0, 1);
-}
+.center-form{
+    margin-left: auto;
+    margin-right: auto;
 
+    width: 50%;
+}

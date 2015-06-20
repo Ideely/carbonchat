@@ -1,5 +1,18 @@
 ﻿{
     "deviceInformation": {
         "deviceSerial": "123456789"
+    },
+    "networkInformation": {
+        networks: [
+            {
+                "networkName": "japan2",
+                "networkPassword": "sdfsdfsdfsdf"
+            },
+            {
+
+                "networkName": "japan2",
+                "networkPassword": "sdfsdfsdfsdf"
+            }
+        ]
     }
 }

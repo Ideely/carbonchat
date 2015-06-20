@@ -4,6 +4,10 @@
 
 (function () {
 
-    var carbonchatApp = angular.module('carbonchatApp', ['ui.router', 'firebase']);
+    var carbonchatApp = angular.module('carbonchatApp', [
+        'ui.router',
+        'firebase',
+        'ngMaterial'
+    ]);
 
 })();

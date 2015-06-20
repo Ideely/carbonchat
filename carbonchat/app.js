@@ -3,21 +3,33 @@
  * 
  * */
 (function () {
-
+    
     //Our dependences
     var firebase = require('firebase');
-
-    var printer = require('module-print-thermal');
-    var authModule = require('module-authenticate');
-    var messageModule = require('module-message');
     
+    /*
+    var printer = require("./module-print-thermal.js");
+    console.log("declaring our dependencies - declared thermal printer");
+    var authModule = require("./module-authenticate.js");
+    var messageModule = require("./module-message.js");
+    */
+     
     //Module level variables
-    var firebaseRef = new Firebase("https://carbonchat.firebaseio.com/");
+    var firebaseRef = new firebase("https://carbonchat.firebaseio.com/");
     
     function init(){
         
+        console.log('in init');
+        
+        //Lets see if we can read from the firebase
+        firebaseRef.child("app_settings").child("url").once("value", 
+            function (url) {
+                console.log(url);
+        });
+        
+
         //First things first, lets authenticate
-        authenticate().then();
+        //authenticate().then();
 
 
         
@@ -29,7 +41,7 @@
 
         authMethods.forEach(function (f) {
             result = result.then(f);
-        });
+        v});
 
         return result.promise;
     }                   //Authenticate

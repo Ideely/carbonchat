@@ -1,0 +1,6 @@
+C:\Users\Larkin\Documents\Ideely\Source\Repos\carbonchat\carbonchatweb\bin\carbonchatweb.dll.config
+C:\Users\Larkin\Documents\Ideely\Source\Repos\carbonchat\carbonchatweb\bin\carbonchatweb.dll
+C:\Users\Larkin\Documents\Ideely\Source\Repos\carbonchat\carbonchatweb\bin\carbonchatweb.pdb
+C:\Users\Larkin\Documents\Ideely\Source\Repos\carbonchat\carbonchatweb\obj\Debug\carbonchatweb.csprojResolveAssemblyReference.cache
+C:\Users\Larkin\Documents\Ideely\Source\Repos\carbonchat\carbonchatweb\obj\Debug\carbonchatweb.dll
+C:\Users\Larkin\Documents\Ideely\Source\Repos\carbonchat\carbonchatweb\obj\Debug\carbonchatweb.pdb

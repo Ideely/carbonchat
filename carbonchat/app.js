@@ -34,7 +34,7 @@
         return result.promise;
     }                   //Authenticate
     function getMessages(){                      
-
+        //get a list of all the conversations that the user 
     }                    //Get any new messages
     function printMessag(message){
 

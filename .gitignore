@@ -41,3 +41,7 @@
 .Trashes
 ehthumbs.db
 Thumbs.db
+*.dat
+*.suo
+*.dat
+carbonchat/carbonchat.v12.suo

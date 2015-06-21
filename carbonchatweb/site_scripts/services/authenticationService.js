@@ -7,7 +7,10 @@
 
     var carbonchatApp = angular.module('carbonchatApp');
 
-    carbonchatApp.factory('authService', function ($scope, $http, $q, $firebaseObject) {
+    carbonchatApp.service('authService', function ($http, $q, $firebaseObject) {
+        var q = $q;
+
+        var authCredentials;                                                  //The authentication credentials of the user
 
         var authCarbonChat = function (firebaseRef, email, password) {
             //This function will return a promose that will be resolved if the user is authenticated and will
@@ -22,9 +25,13 @@
             }, function (error, authData) {
                 if (error) {
                     console.log("Login Failed!", error);
+
+                    authCredentials = null;
                     deferred.reject(error);
                 } else {
                     console.log("Authenticated successfully with payload:", authData);
+
+                    authCredentials = authData;
                     deferred.resolve(authData);
                 }
             });
@@ -60,11 +67,20 @@
 
             return deferred.promise;
 
-        }       //This will attempt to create a new user with the following email and password
+        }           //This will attempt to create a new user with the following email and password
+        var getCredentials = function () {
+            if (authCredentials == null) {
+                return "Not Authenticated";
+            } else {
+                return authCredentials;
+            }
+        }           //This will return the authentication credentials of the user
 
         return {
             authCarbonChat: authCarbonChat,
-            createUser: createUser
+            createUser: createUser,
+
+            getCredentials: getCredentials
         }
     });
 

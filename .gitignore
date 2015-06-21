@@ -45,3 +45,7 @@ Thumbs.db
 *.suo
 *.dat
 carbonchat/carbonchat.v12.suo
+*.suo
+carbonchatweb/bin/carbonchatweb.pdb
+*.pdb
+carbonchatweb/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache

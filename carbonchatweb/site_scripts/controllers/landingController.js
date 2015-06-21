@@ -1,7 +1,7 @@
 ﻿(function () {
     var carbonchatApp = angular.module('carbonchatApp');
 
-    carbonchatApp.controller('landingController', function ($scope, $http, $q, $firebaseObject) {
+    carbonchatApp.controller('landingController', ["$scope", "$http", "$q", "$firebaseObject", "authService", function ($scope, $http, $q, $firebaseObject, authService) {
         $scope.firebaseSettings = {
             location: "https://carbonchat.firebaseio.com/"
         };
@@ -38,6 +38,11 @@
         });                         //Set the settings for the app
 
         $scope.authUser = function() {
+
+            console.log(authService);
+            authService.authCarbonChat(fireRef, $scope.user.email, $scope.user.password)
+
+            /*
             console.log('trying to authenticate');
 
             fireRef.authWithPassword({
@@ -52,7 +57,7 @@
                     console.log("Authenticated successfully with payload:", authData);
                 }
             });
-
+            */
         };       //Attempt to authenticate the user
         function createUser() {
             var deferred = q.deferred();
@@ -84,20 +89,8 @@
 
         }               //Create a new user
         function addUserToMemberTable(userId) {
-            //This function will take the userId, the user's email, password, and join date and will create a new object for them
-            fireRef.child("app_data").child("users").put(userId, {
-                email: $scope.user.email,
-                authentication_ids: {
-                    "carbonchat": {
-                        email: $scope.user.email,
-                        password: $scope.user.password
-                    }
-                },
-                role: "User",
-                join_date: 
-
-            });
+            
         }       //NEED TO FINISH
 
-    });
+    }]);
 })();

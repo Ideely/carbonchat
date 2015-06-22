@@ -40,7 +40,11 @@
         $scope.authUser = function() {
 
             console.log(authService);
-            authService.authCarbonChat(fireRef, $scope.user.email, $scope.user.password)
+            var authData = authService.authCarbonChat(fireRef, $scope.user.email, $scope.user.password);
+
+            authData.then(function (authData) {
+                console.log(authData);
+            });
 
             /*
             console.log('trying to authenticate');

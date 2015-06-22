@@ -1,9 +1,21 @@
-﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
-<head>
-    <title></title>
-</head>
-<body>
+﻿<div class="center">
+    <div class="center-form">
+        Start chatting, crazy
+        <br />
 
-</body>
-</html>
+        <form>
+            <md-input-container>
+                <label>Conversation</label>
+                <input ng-model="message.conversation" type="text" placeholder="conversation" required /> <br />
+            </md-input-container>
+
+            <md-input-container>
+                <label>message</label>
+                <input type="text" placeholder="message" ng-model="message.text" required>
+            </md-input-container>
+
+            <md-button class="md-raised md-primary" ng-click="sendMessage()">Send</md-button>
+        </form>
+
+    </div>
+</div>

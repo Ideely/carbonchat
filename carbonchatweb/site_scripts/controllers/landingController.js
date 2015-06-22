@@ -1,7 +1,7 @@
 ﻿(function () {
     var carbonchatApp = angular.module('carbonchatApp');
 
-    carbonchatApp.controller('landingController', ["$scope", "$http", "$q", "$firebaseObject", "authService", function ($scope, $http, $q, $firebaseObject, authService) {
+    carbonchatApp.controller('landingController', ["$scope", "$http", "$q", "$firebaseObject", "authService", "$state", function ($scope, $http, $q, $firebaseObject, authService, $state) {
         $scope.firebaseSettings = {
             location: "https://carbonchat.firebaseio.com/"
         };
@@ -44,24 +44,10 @@
 
             authData.then(function (authData) {
                 console.log(authData);
-            });
 
-            /*
-            console.log('trying to authenticate');
-
-            fireRef.authWithPassword({
-                "email": $scope.user.email,
-                "password": $scope.user.password
-            }, function(error, authData) {
-                if (error) {
-                    console.log("Login Failed!", error);
-                    //create a user
-                    createUser();
-                } else {
-                    console.log("Authenticated successfully with payload:", authData);
-                }
-            });
-            */
+                //change state to go to the chatting state
+                $state.go('chatting');
+            }).error;
         };       //Attempt to authenticate the user
         function createUser() {
             var deferred = q.deferred();

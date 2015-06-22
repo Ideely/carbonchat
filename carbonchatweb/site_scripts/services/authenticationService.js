@@ -9,8 +9,7 @@
 
     carbonchatApp.service('authService', function ($http, $q, $firebaseObject) {
         var q = $q;
-
-        var authCredentials;                                                  //The authentication credentials of the user
+        var authCredentials;                                              //The authentication credentials of the user
 
         var authCarbonChat = function (fireRef, email, password) {
             //This function will return a promose that will be resolved if the user is authenticated and will
@@ -97,7 +96,7 @@
 
             deferred.resolve("success");
             return deferred.promise;
-        }       //Creates the user in our table where we can store user information
+        }      //Creates the user in our table where we can store user information
 
         var getCredentials = function () {
             if (authCredentials == null) {
@@ -105,7 +104,7 @@
             } else {
                 return authCredentials;
             }
-        }           //This will return the authentication credentials of the user
+        }                               //This will return the authentication credentials of the user
         var getUserInformation = function (fireRef, userId) {
             var deferred = q.defer();
             var obj = $firebaseObject(fireRef.child("app_data").child("users").child(userId));
@@ -118,7 +117,7 @@
             });
 
             return deferred.promise;            
-        }       //Returns a promise that will be resolved with the information in the user's table
+        }            //Returns a promise that will be resolved with the information in the user's table
 
         return {
             authCarbonChat: authCarbonChat,

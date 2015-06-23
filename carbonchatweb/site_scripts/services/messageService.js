@@ -20,16 +20,44 @@
             //firebaseObj = firebaseRef;
         }
 
+		var gotNewMessage = function(userId){
+			//Will return a promise that will be fulfilled after being returned a message, then will be called again
+			var deferred = q.defer();
+			
+			var newMessagePromise = firebaseService.getNewMessage(userId)
+			newMessagePromise.then(function(message){
+				newMessagePromise.resolve(message);							//returning the new message
+				newMessagePromise = firebaseService.getNewMessage(userId);	//Calling it again
+			}, function(error){
+				deferred.reject(error);										//Return the error
+				newMessagePromise = firebaseService.getNewMessage(userId);	//Calling it add
+			});
+			
+			return deferred.promise;
+		}
         var readUserMessagesByConversation = function (conversation) {
             var deferred = q.defer();
 
             //read the first message from the conversation and add it to the 
-			firebaseService.
+			//firebaseService.
 
             return deferrd.promise;
         }
         var createConversationListener = function (conversation) { }
-        var writeMessage = function (message, userData) { }
+        var writeMessage = function (message, userData) { 
+			//This will call the firebase service to write data to the database
+			var deferred = q.defer();
+			var writeDataPromise;
+			
+			writeDataPromise = firebaseService.writeData({"app_data", "messages"}, message);
+			writeDataPromise.then(function(data){
+				deferred.resolve(data);
+			}, function(error){
+				deferred.reject(error);
+			});
+			
+			return deferred.promise;
+		}
         
         return {
             readUserMessages: readUserMessages,

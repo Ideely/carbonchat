@@ -193,6 +193,16 @@
             return deferred.promise;
         }
 
+		var gotNewMessage = function(userId){
+			//This will return a promise that will be resolved whenever we get a new message		
+			var deferred = q.defer();
+			fireRef.child("app_data").child("users").child("messages").on("child_added", function(data){
+				return deferred.resolved(data);
+			});
+			
+			return deferred.promise;
+		}
+		
         return {
             authCarbonChat: authCarbonChat,
             createUser: createUser,
@@ -203,7 +213,8 @@
             writeData: writeData,
 
             createListener: createListener,
-            readDataOnce: readDataOnce
+            readDataOnce: readDataOnce,
+			gotNewMessage: gotNewMessage
         }
     });
 

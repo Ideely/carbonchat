@@ -21,7 +21,7 @@
 		});
 		
         $scope.authUser = function() {
-            console.log(authService);
+			//This will authenticate the user assuming they have entered email and password
             var authData = authService.authCarbonChat($scope.user.email, $scope.user.password);
 
             authData.then(function (authData) {
@@ -29,7 +29,7 @@
 
                 //change state to go to the chatting state
                 $state.go('chatting');
-            }).error;
+            });
         };       //Attempt to authenticate the user
     }]);
 })();

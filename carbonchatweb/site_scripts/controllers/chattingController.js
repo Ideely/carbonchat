@@ -6,7 +6,7 @@
 
     var carbonchatApp = angular.module('carbonchatApp');
 
-    carbonchatApp.controller('chattingController', ["$scope", "$http", "$q", "authService", "messageService", "$state", function ($scope, $http, $q, authService, messageService, $state) {
+    carbonchatApp.controller('chattingController', ["$scope", "$http", "$q", "authService", "messageService", "appService", "$state", function ($scope, $http, $q, authService, messageService, appService, $state) {
         $scope.site = {
             url: "",
             name: "",
@@ -19,10 +19,24 @@
 			gender = ""
 		}
 		
+		var sitePromise = appService.getAppInformation();
+		sitePromise.then(function(data){
+			angular.foreach(data, (key, value){
+				if(key == "url")
+					$scope.site.url = value;
+				else if(key =="slogan")
+					$scope.site.slogan = value;
+				else if(key == "name")
+					$scope.site.name = value;
+			});
+		}, function(error){
+			console.log("error getting site information " + error);
+		});
+		
 		var messagePromise = messageService.gotNewMessage();
 		messageePromise.then(function(data){
 			console.log('got one' + data);
-		})
+		});
 
         $scope.sendMessage = function () {
             //Need to save this message to the firebase

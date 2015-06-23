@@ -10,15 +10,28 @@
 
     carbonchatApp.service('firebaseService', function ($http, $q, $firebaseObject) {
         var q = $q;
-        var authCredentials;                                              //The authentication credentials of the user
-
-        var authCarbonChat = function (fireRef, email, password) {
+        var firebaseLocation = "https://carbonchat.firebaseio.com/";		
+		var fireRef;
+		var fireRefObj;				//Need to understand how this is different from the fireRef
+		
+		//This function will initialize the firebase references and any other objects that we'll need 
+		//when we are referencing data from the 
+		var init(){
+			fireRef = new Firebase(firebaseLocation);		//Create a new object refering to the root of the firebase
+		}
+		
+        var authCarbonChat = function (email, password) {
             //This function will return a promose that will be resolved if the user is authenticated and will
             //be rejected with a message indicating why,
             var deferred = q.defer();
 
             console.log('trying to authenticate');
-
+			
+			//Always check to ensure that fireRef is defined
+			if(fireRef == null){
+				init();
+			}
+			
             fireRef.authWithPassword({
                 "email": email,
                 "password": password
@@ -52,11 +65,16 @@
 
         }       //this will attempt to authenticate the user via the carbonchat authwithpassword 
 
-        var createUser = function (fireRef, email, password) {
+        var createUser = function (email, password) {
             //This function will return a promise that will be resolved with the UID of the new user or rejected with an error code.
 
             var deferred = q.defer();
 
+			//Always check to ensure that the firebase reference isn't null
+			if(fireRef == null){
+				init();
+			}
+			
             fireRef.createUser({
                 email: email,
                 password: password
@@ -84,7 +102,13 @@
             return deferred.promise;
 
         }           //This will attempt to create a new user with the following email and password
-        var createUserInTable = function (fireRef, userId, email) {
+        var createUserInTable = function (userId, email) {
+			
+			//Always check to ensure that fireRef isn't null
+			if(fireRef == null){
+				init();
+			}
+			
             var saveFireRef = fireRef.child("app_data").child("users");
             var deferred = q.defer();
 
@@ -98,15 +122,15 @@
             return deferred.promise;
         }      //Creates the user in our table where we can store user information
 
-        var getCredentials = function () {
-            if (authCredentials == null) {
-                return "Not Authenticated";
-            } else {
-                return authCredentials;
-            }
-        }                               //This will return the authentication credentials of the user
-        var getUserInformation = function (fireRef, userId) {
+        var getUserInformation = function (userId) {
+			//This will read the information about the user from the firebase table
             var deferred = q.defer();
+			
+			//Always check to ensure that the firebase reference isn't null
+			if(fireRef == null){
+				init();
+			}
+			
             var obj = $firebaseObject(fireRef.child("app_data").child("users").child(userId));
 
             obj.$loaded().then(function () {
@@ -119,8 +143,20 @@
             return deferred.promise;
         }            //Returns a promise that will be resolved with the information in the user's table
 
-        var writeData = function (fireRef, object) {
+        var writeData = function (pathList, object) {
+			//This will write data to the path specified as a list of nodes
             var deferred = q.defer();
+			
+			//Always check to ensure that fireRef isn't null
+			if(fireRef == null){
+				init();
+			}
+			
+			var firebaseRefToSave = fireRef;
+			
+			angular.forEach(pathList, function (value, key) {
+				firebaseRefToSave = firebaseRefToSave.child(value);		//Iterate through each node and go to it in the reference
+			});
 
             fireRef.set(object);
 
@@ -132,7 +168,29 @@
             
         }
         var readDataOnce = function (path) {
+			//This will read the information about the user from the firebase table
+            var deferred = q.defer();
+			var firebaseRefToRead;
+			
+			//Always check to ensure that the firebase reference isn't null
+			if(fireRef == null){
+				init();
+			}
+			
+			angular.forEach(pathList, function (value, key) {
+				firebaseRefToRead = firebaseRefToSave.child(value);		//Iterate through each node and go to it in the reference
+			});
+			
+            var obj = $firebaseObject(firebaseRefToRead);
 
+            obj.$loaded().then(function () {
+                if (err) {
+                    deferred.reject(err);
+                }
+                deferred.resolve(obj);
+            });
+
+            return deferred.promise;
         }
 
         return {

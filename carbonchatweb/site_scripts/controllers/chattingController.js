@@ -6,7 +6,18 @@
 
     var carbonchatApp = angular.module('carbonchatApp');
 
-    carbonchatApp.controller('chattingController', function ($scope, $http, $q, $firebaseObject) {
+    carbonchatApp.controller('chattingController', ["$scope", "$http", "$q", "$firebaseObject", "authService", "messageService", "$state", function ($scope, $http, $q, $firebaseObject, authService, messageService, $state) {
+        $scope.firebaseSettings = {
+            location: "https://carbonchat.firebaseio.com/"
+        };
+
+
+        $scope.site = {
+            url: "",
+            name: "",
+            slogan: ""
+        }
+
 
         var url = $scope.firebaseSettings.location;
         var fireRef = new Firebase(url);
@@ -25,8 +36,11 @@
             });
         });                         //Set the settings for the app
 
-        
+        $scope.sendMessage = function () {
+            //Need to save this message to the firebase
 
-    });
+        }
+
+    }]);
 
 })();

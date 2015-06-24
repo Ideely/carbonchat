@@ -22,22 +22,28 @@
 			
 		var getAppInformation = function(){
 			var deferred = q.defer();
-			
-			firebaseService.readDataOnce({"app_settings"}).then(
-			function(data){
-				angular.forEach(data, function (value, key) {
-					if(key == "slogan")
-						app_info.slogan = value;
-					else if(key == "url")
-						app_info.url = value;
-					else if(key == "name")
-						app_info.name = value;
-				});
+			var path_list = {0: "app_settings"};
+
+			firebaseService.readDataOnce("app_settings").then(
+			    function (data) {
+
+			        console.log("In app service: app settings loaded");
+			        console.log(data);
+
+				    angular.forEach(data, function (value, key) {
+					    if(key == "slogan")
+						    app_info.slogan = value;
+					    else if(key == "url")
+						    app_info.url = value;
+					    else if(key == "name")
+						    app_info.name = value;
+				    });
 				
-				deferred.resolve(app_info);
-			}, function(error){
-				deferred.reject(error);
-			};
+				    deferred.resolve(app_info);
+			    }, function(error){
+				    deferred.reject(error);
+			    }
+            );
 			
 			return deferred.promise;
 		}	

@@ -16,7 +16,7 @@
 		
 		//This function will initialize the firebase references and any other objects that we'll need 
 		//when we are referencing data from the 
-		var init(){
+		function init(){
 			fireRef = new Firebase(firebaseLocation);		//Create a new object refering to the root of the firebase
 		}
 		
@@ -167,26 +167,25 @@
         var createListener = function (path) {
             
         }
-        var readDataOnce = function (path) {
+        var readDataOnce = function (path_list) {
 			//This will read the information about the user from the firebase table
             var deferred = q.defer();
 			var firebaseRefToRead;
 			
+			console.log("firebase service: ");
+
 			//Always check to ensure that the firebase reference isn't null
 			if(fireRef == null){
 				init();
 			}
-			
-			angular.forEach(pathList, function (value, key) {
-				firebaseRefToRead = firebaseRefToSave.child(value);		//Iterate through each node and go to it in the reference
+
+			angular.forEach(path_list, function (value, key) {
+				firebaseRefToRead = fireRef.child(value);		//Iterate through each node and go to it in the reference
 			});
 			
             var obj = $firebaseObject(firebaseRefToRead);
 
             obj.$loaded().then(function () {
-                if (err) {
-                    deferred.reject(err);
-                }
                 deferred.resolve(obj);
             });
 
@@ -207,7 +206,6 @@
             authCarbonChat: authCarbonChat,
             createUser: createUser,
 
-            getCredentials: getCredentials,
             getUserInformation: getUserInformation,
 
             writeData: writeData,

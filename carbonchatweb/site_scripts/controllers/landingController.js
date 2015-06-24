@@ -14,11 +14,12 @@
         }
 		
 		appService.getAppInformation().then(
-		function(app_info){
-			applicationText = app_info;
-		}, function(error){
-			console.log("getting application info error");
-		});
+		    function(app_info){
+			    applicationText = app_info;
+		    }, function(error){
+			    console.log("getting application info error");
+		    }
+        );
 		
         $scope.authUser = function() {
 			//This will authenticate the user assuming they have entered email and password

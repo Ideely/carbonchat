@@ -14,14 +14,15 @@
         }
 		
 		$scope.user = {
-			name = "",
-			userId = "",
-			gender = ""
+			name: "",
+			userId: "",
+			gender: ""
 		}
 		
+        
 		var sitePromise = appService.getAppInformation();
 		sitePromise.then(function(data){
-			angular.foreach(data, (key, value){
+			angular.foreach(data, function(key, value){
 				if(key == "url")
 					$scope.site.url = value;
 				else if(key =="slogan")
@@ -33,17 +34,19 @@
 			console.log("error getting site information " + error);
 		});
 		
+        /*
 		var messagePromise = messageService.gotNewMessage();
 		messageePromise.then(function(data){
 			console.log('got one' + data);
 		});
+        
 
         $scope.sendMessage = function () {
             //Need to save this message to the firebase
 			var deferred = q.defer();
 			var messageSavePromise;
 			
-			messageSavePromise = messageService.writeMessage($scope.user.userId);
+			messageSavePromise = messageService.writeMessage($scope.user.userId, );
 			messageSavePromise.then(
 				function(data){
 					deferred.resolve("success");
@@ -52,6 +55,7 @@
 			
 			return deferred.promise;
 		}
+        */
     }]);
 
 })();

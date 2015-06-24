@@ -8,7 +8,7 @@
 
     var carbonchatApp = angular.module('carbonchatApp');
 
-    carbonchatApp.service('authService', ["$http", "$q", "firebaseService", function ($http, $q, firebaseService ) {
+    carbonchatApp.service('messageService', ["$http", "$q", "firebaseService", function ($http, $q, firebaseService ) {
         var q = $q;
         //var firebaseRef = null;
         //var firebaseObj = null;
@@ -49,7 +49,7 @@
 			var deferred = q.defer();
 			var writeDataPromise;
 			
-			writeDataPromise = firebaseService.writeData({"app_data", "messages"}, message);
+			writeDataPromise = firebaseService.writeData({0: "app_data", 1: "messages"}, message);
 			writeDataPromise.then(function(data){
 				deferred.resolve(data);
 			}, function(error){
@@ -60,7 +60,7 @@
 		}
         
         return {
-            readUserMessages: readUserMessages,
+            readUserMessagesByConversation: readUserMessagesByConversation,
             createConversationListener: createConversationListener,
 
             writeMessage: writeMessage

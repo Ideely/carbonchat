@@ -18,7 +18,7 @@
 
             console.log('trying to authenticate');
 
-			firebaseService.authWithPassword(email, password).then(
+            firebaseService.authCarbonChat(email, password).then(
 				function(authData){
 					deferred.resolve(authData);
 				}, function(error){

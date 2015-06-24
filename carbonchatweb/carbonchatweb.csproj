@@ -74,6 +74,7 @@
     <Content Include="site_scripts\controllers\landingController.js" />
     <Content Include="site_scripts\controllers\navController.js" />
     <Content Include="site_scripts\modules\carbonchatapp.js" />
+    <Content Include="site_scripts\services\appService.js" />
     <Content Include="site_scripts\services\authenticationService.js" />
     <Content Include="site_scripts\services\firebaseService.js" />
     <Content Include="site_scripts\services\messageService.js" />

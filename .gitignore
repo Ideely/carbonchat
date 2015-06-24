@@ -54,3 +54,9 @@ carbonchatweb/bin/carbonchatweb.pdb
 *.cache
 carbonchatweb/obj/Debug/carbonchatweb.pdb
 *.cache
+carbonchat/carbonchat.v12.suo
+*.pdb
+carbonchatweb/carbonchatweb.csproj
+*.cache
+carbonchatweb/obj/Debug/carbonchatweb.pdb
+*.cache

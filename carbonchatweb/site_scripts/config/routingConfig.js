@@ -30,7 +30,25 @@
                       controller: 'chattingController'
                   }
               }
-          });
+          })
+        .state('profie', {
+            url: '/profile',
+            views: {
+                banner: {
+                    templateUrl: '/templates/banner.html',
+                    controller: 'bannerController'
+                },
+                nav: {
+                    templateUrl: '/templates/navbar.html',
+                    controller: 'navController'
+                },
+                content: {
+                    templateUrl: '/templates/profile.html',
+                    controller: 'profileController'
+                }
+            }
+
+        });
         //$urlRouterProvider.otherwise('/landing');
     });
 

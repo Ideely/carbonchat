@@ -1,7 +1,7 @@
 ﻿(function () {
     var carbonchatApp = angular.module('carbonchatApp');
 
-    carbonchatApp.controller('landingController', ["$scope", "$http", "$q", "authService", "messageService", "appService", "$state", function ($scope, $http, $q, authService, messageService, appService, $state) {
+    carbonchatApp.controller('landingController', ["$scope", "$http", "$q", "authService", "messageService", "appService", "$state", "$timeout", function ($scope, $http, $q, authService, messageService, appService, $state, $timeout) {
         $scope.user = {
             email: "",
             password: ""
@@ -15,7 +15,11 @@
 		
 		appService.getAppInformation().then(
 		    function(app_info){
-			    applicationText = app_info;
+		        applicationText = app_info;
+
+		        $timeout(function () {
+		            $scope.$apply();
+		        });
 		    }, function(error){
 			    console.log("getting application info error");
 		    }

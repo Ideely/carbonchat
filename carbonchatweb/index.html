@@ -4,7 +4,7 @@
     <title>carbonchat</title>
 
     <!-- Scrolls-->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">            <!-- Vanilla Bootstrap CSS-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">                <!-- Vanilla Bootstrap CSS-->
     <link rel="stylesheet" href="resources/styles/site.css"/>                                                           <!-- Custom CSS-->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">                <!-- Font Awesome CSS-->
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.css"><!-- Angular Materal Design-->
@@ -13,12 +13,12 @@
 </head>
 <body ng-app="carbonchatApp">
 
-    <div ui-view name="banner"></div>
+    <div ui-view="banner"></div>
 
-    <div ui-view name="nav"></div>
+    <div ui-view="nav"></div>
 
     <div class="fill">
-        <div class="fill" ui-view name="content"></div>
+        <div class="fill" ui-view="content"></div>
     </div>
 
     <!-- Spells-->

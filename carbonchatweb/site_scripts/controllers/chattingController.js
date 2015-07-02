@@ -7,46 +7,32 @@
     var carbonchatApp = angular.module('carbonchatApp');
 
     carbonchatApp.controller('chattingController', ["$scope", "$http", "$q", "authService", "messageService", "appService", "$state", function ($scope, $http, $q, authService, messageService, appService, $state) {
-        $scope.site = {
-            url: "",
+        var q = $q;
+        $scope.user = {
             name: "",
-            slogan: ""
-        }
-		
-		$scope.user = {
-			name: "",
-			userId: "",
-			gender: ""
-		}
-		
-        
-		var sitePromise = appService.getAppInformation();
-		sitePromise.then(function(data){
-			angular.foreach(data, function(key, value){
-				if(key == "url")
-					$scope.site.url = value;
-				else if(key =="slogan")
-					$scope.site.slogan = value;
-				else if(key == "name")
-					$scope.site.name = value;
-			});
-		}, function(error){
-			console.log("error getting site information " + error);
-		});
-		
-        /*
-		var messagePromise = messageService.gotNewMessage();
-		messageePromise.then(function(data){
-			console.log('got one' + data);
-		});
-        
+            userId: "",
+            gender: ""
+        };
+        $scope.message = {
+            text: "",
+            to: [],
+            timestamp: "",
+            from: "",
+            location: ""
+        };
 
+         
+        
         $scope.sendMessage = function () {
             //Need to save this message to the firebase
 			var deferred = q.defer();
 			var messageSavePromise;
 			
-			messageSavePromise = messageService.writeMessage($scope.user.userId, );
+            //Populate the rest of the message attributes
+            $scope.message.user - 
+
+            console.log($scope.message)
+			messageSavePromise = messageService.writeMessage($scope.message);
 			messageSavePromise.then(
 				function(data){
 					deferred.resolve("success");
@@ -55,7 +41,7 @@
 			
 			return deferred.promise;
 		}
-        */
+        
     }]);
 
 })();

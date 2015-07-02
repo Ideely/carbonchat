@@ -63,7 +63,7 @@
             } else {
                 return authCredentials;
             }
-        }                               //This will return the authentication credentials of the user
+        }                      //This will return the authentication credentials of the user
         var getUserInformation = function (userId) {
             var deferred = q.defer();
             
@@ -76,6 +76,20 @@
 
             return deferred.promise;            
         }            //Returns a promise that will be resolved with the information in the user's table
+
+        var updateUserInformation = function(userId, value){
+            var deferred = q.defer();
+
+            var userPath = 'app_data/users/' + userId;                          //get to the path of the user so we can update their information
+
+            firebaseService.updateData(userPath, value).then(function (data) {
+                deferred.resolve(data);
+            }).catch(function(err){
+                deferred.reject(err);
+            });
+
+            return deferred.promise;
+        }
 
         return {
             authCarbonChat: authCarbonChat,

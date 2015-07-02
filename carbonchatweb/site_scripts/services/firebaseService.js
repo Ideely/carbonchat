@@ -144,25 +144,32 @@
         }            //Returns a promise that will be resolved with the information in the user's table
 
         var writeData = function (pathList, object) {
-			//This will write data to the path specified as a list of nodes
+            //This will create a new child node at the specified location and will then write data to that location and will return a reference
+            //to the new child node
+
             var deferred = q.defer();
-			
+            var messageKey;                 //Holds the messageId
+
 			//Always check to ensure that fireRef isn't null
 			if(fireRef == null){
 				init();
 			}
 			
+			console.log('in firebase service - about to save');
+
+            //Save the message to the messages table
 			var firebaseRefToSave = fireRef;
-			
-			angular.forEach(pathList, function (value, key) {
-				firebaseRefToSave = firebaseRefToSave.child(value);		//Iterate through each node and go to it in the reference
-			});
+			firebaseRefToSave = firebaseRefToSave.child(pathList);
+			firebaseRefToSave = firebaseRefToSave.push();               //Create a new child
+			firebaseRefToSave.set(object);                              //Save the message to the new id
 
-            fireRef.set(object);
+            deferred.resolve(messageKey);
+            return deferred.promise;
 
-            deferred.resolve("success");
-            return deferred.promise();
-        }                     //Saves data to the firebaseRef
+        }           //Saves data to the firebaseRef
+        var updateData = function (pathList, object) {
+
+        }       //This function will take a path and an object and will only update the information 
 
         var createListener = function (path) {
             
@@ -179,17 +186,16 @@
 				init();
 			}
 
-			angular.forEach(path_list, function (value, key) {
-				firebaseRefToRead = fireRef.child(value);		//Iterate through each node and go to it in the reference
+			firebaseRefToRead = fireRef;
+
+			firebaseRefToRead = fireRef.child(path_list);
+
+			firebaseRefToRead.once('value', function (data) {
+			    deferred.resolve(data.val());
 			});
-			
-            var obj = $firebaseObject(firebaseRefToRead);
 
-            obj.$loaded().then(function () {
-                deferred.resolve(obj);
-            });
 
-            return deferred.promise;
+			return deferred.promise;
         }
 
 		var gotNewMessage = function(userId){

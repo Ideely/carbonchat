@@ -5,9 +5,26 @@
 (function () {
 
     var carbonchatApp = angular.module('carbonchatApp');
+    carbonchatApp.controller('bannerController', [ "$scope", "$http", "$q", "authService", "messageService", "appService", "$state", "$timeout", function ($scope, $http, $q, authService, messageService, appService, $state, $timeout) {
+        $scope.site = {
+            title: "",
+            slogan: "" 
+        }
 
-    carbonchatApp.controller('bannerController', function ($scope, $http, $q, $firebaseObject) {
+        appService.getAppInformation().then(
+            function (app_info) {
+                $scope.site = app_info;
 
-    });
+                $timeout(function () {
+                    $scope.$apply();
+                });
+            }, function (error) {
+                console.log("getting application info error");
+            }
+        );
+
+
+
+    }]);
 
 })();

@@ -44,14 +44,31 @@
             return deferrd.promise;
         }
         var createConversationListener = function (conversation) { }
-        var writeMessage = function (message, userData) { 
+        var writeMessage = function (message) { 
 			//This will call the firebase service to write data to the database
 			var deferred = q.defer();
 			var writeDataPromise;
-			
-			writeDataPromise = firebaseService.writeData({0: "app_data", 1: "messages"}, message);
-			writeDataPromise.then(function(data){
-				deferred.resolve(data);
+			var recipientsPromise;
+
+			console.log('writing message to table: ' + message.text);
+			writeDataPromise = firebaseService.writeData('app_data/messages', message);     //Write the message to the messages table
+			writeDataPromise.then(function (messageId) {
+                
+			    console.log('message created in table with id: ' + messageId);
+
+                //Then we need to save a reference to each 
+			    _.foreach(message.to, function (recipient, key) {
+			        console.log('writing reference at user: ' + recipient);
+
+			        var promise = firebaseService.writeData('app_data/users/' + recipient + '/messages', { from: message.from, messageId: messageId});
+			        recipientsPromise.push(promise);
+			    });
+
+			    //Find when all the promises have been completed
+			    q.all(recipientsPromise).then(function (data) {
+			        deferred.resolve("success");
+			    });
+
 			}, function(error){
 				deferred.reject(error);
 			});

@@ -1,0 +1,25 @@
+﻿<div class="center">
+    <div class="center-form">
+        This is your profile, make sure you got the important stuff.
+        <br />
+
+        <form>
+            <md-input-container>
+                <label>Name</label>
+                <input ng-model="user.name" type="text" placeholder="full name"/> <br />
+            </md-input-container>
+
+            <md-input-container>
+                <label>email</label>
+                <input ng-model="user.email" type="email" placeholder="email">
+            </md-input-container>
+
+            <md-select placeholder="Gender" ng-model="user.gender">
+                <md-option ng-repeat="gender in genderList" value="{{gender}}">{{gender}}</md-option>
+            </md-select>
+
+            <md-button class="md-raised md-primary" ng-click="saveProfile()">Savw</md-button>
+        </form>
+
+    </div>
+</div>

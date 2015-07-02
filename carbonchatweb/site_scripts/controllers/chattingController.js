@@ -21,7 +21,9 @@
             location: ""
         };
 
-         
+        authService.getUserInformation(authService.getCredentials().userId).then(function (data) {
+            //TODO finish this bit
+        });
         
         $scope.sendMessage = function () {
             //Need to save this message to the firebase
@@ -29,7 +31,7 @@
 			var messageSavePromise;
 			
             //Populate the rest of the message attributes
-            $scope.message.user - 
+			$scope.message.user = $scioe.user.userId;
 
             console.log($scope.message)
 			messageSavePromise = messageService.writeMessage($scope.message);

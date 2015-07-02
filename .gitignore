@@ -60,3 +60,4 @@ carbonchatweb/carbonchatweb.csproj
 *.cache
 carbonchatweb/obj/Debug/carbonchatweb.pdb
 *.cache
+*.suo

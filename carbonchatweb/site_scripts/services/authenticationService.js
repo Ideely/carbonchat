@@ -9,7 +9,8 @@
 
     carbonchatApp.service('authService', function ($http, $q, firebaseService) {
         var q = $q;
-        var authCredentials;                                              //The authentication credentials of the user
+        var authCredential = null;                                                //The authentication credentials of the user
+        var userInformation = null;                                         //The user's information
 
         var authCarbonChat = function (email, password) {
             //This function will return a promose that will be resolved if the user is authenticated and will
@@ -19,7 +20,8 @@
             console.log('trying to authenticate');
 
             firebaseService.authCarbonChat(email, password).then(
-				function(authData){
+				function (authData) {
+				    authCredentials = authData;
 					deferred.resolve(authData);
 				}, function(error){
 					deferred.reject(error);
@@ -67,12 +69,17 @@
         var getUserInformation = function (userId) {
             var deferred = q.defer();
             
-			firebaseService.getUserInformation(userId).then(
-				function(userInfo){
-					deferred.resolve(userInfo);
-				}, function(error){
-					deferred.reject(error);
-				});
+            //Check to see if we have already pulled the information
+            if (userInformation == null) {
+                firebaseService.getUserInformation(userId).then(
+                    function (userInfo) {
+                        deferred.resolve(userInfo);
+                    }, function (error) {
+                        deferred.reject(error);
+                    });
+            } else {
+                deferred.resolve(userInformation);
+            }
 
             return deferred.promise;            
         }            //Returns a promise that will be resolved with the information in the user's table

@@ -125,20 +125,19 @@
         var getUserInformation = function (userId) {
 			//This will read the information about the user from the firebase table
             var deferred = q.defer();
-			
+            var firebaseToRead;
+                
 			//Always check to ensure that the firebase reference isn't null
 			if(fireRef == null){
 				init();
 			}
 			
-            var obj = $firebaseObject(fireRef.child("app_data").child("users").child(userId));
+			console.log(userId);
 
-            obj.$loaded().then(function () {
-                if (err) {
-                    deferred.reject(err);
-                }
-                deferred.resolve(obj);
-            });
+			firebaseToRead = fireRef.child("app_data/users").child(userId);
+			firebaseToRead.once("value", function (snapshot) {
+			    deferred.resolve(data.val());
+			});
 
             return deferred.promise;
         }            //Returns a promise that will be resolved with the information in the user's table

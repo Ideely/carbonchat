@@ -21,10 +21,7 @@
             location: ""
         };
 
-        authService.getUserInformation(authService.getCredentials().userId).then(function (data) {
-            //TODO finish this bit
-            $scope.user = data;
-        });
+        authService.getCredentials().then(function (data) { console.log(data.uid); });
         
         $scope.sendMessage = function () {
             //Need to save this message to the firebase

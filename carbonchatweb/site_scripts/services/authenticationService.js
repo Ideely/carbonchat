@@ -60,11 +60,15 @@
         }      //Creates the user in our table where we can store user information
 
         var getCredentials = function () {
+            var deferred = q.defer();
+
             if (authCredential == null) {
-                return "Not Authenticated";
+                deferred.resolve("Not Authenticated")
             } else {
-                return authCredential;
+                deferred.resovle(authCredential);
             }
+
+            return deferred.promise;
         }                      //This will return the authentication credentials of the user
         var getUserInformation = function (userId) {
             var deferred = q.defer();

@@ -61,3 +61,8 @@ carbonchatweb/carbonchatweb.csproj
 carbonchatweb/obj/Debug/carbonchatweb.pdb
 *.cache
 *.suo
+carbonchatweb/bin/carbonchatweb.pdb
+*.pdb
+carbonchatweb/obj/Debug/carbonchatweb.csproj.FileListAbsolute.txt
+*.cache
+carbonchatweb/obj/Debug/carbonchatweb.csproj.FileListAbsolute.txt

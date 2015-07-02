@@ -23,6 +23,7 @@
 
         authService.getUserInformation(authService.getCredentials().userId).then(function (data) {
             //TODO finish this bit
+            $scope.user = data;
         });
         
         $scope.sendMessage = function () {
@@ -31,7 +32,7 @@
 			var messageSavePromise;
 			
             //Populate the rest of the message attributes
-			$scope.message.user = $scioe.user.userId;
+			$scope.message.user = $scope.user.userId;
 
             console.log($scope.message)
 			messageSavePromise = messageService.writeMessage($scope.message);

@@ -179,18 +179,17 @@
             var deferred = q.defer();
 			var firebaseRefToRead;
 			
-			console.log("firebase service: ");
+			console.log("firebase service: " + path_list);
 
 			//Always check to ensure that the firebase reference isn't null
 			if(fireRef == null){
 				init();
 			}
 
-			firebaseRefToRead = fireRef;
+			//console.log(fireRef);
+			//firebaseRefToRead = fireRef.child(path_list);
 
-			firebaseRefToRead = fireRef.child(path_list);
-
-			firebaseRefToRead.once('value', function (data) {
+			fireRef.once('value', function (data) {
 			    deferred.resolve(data.val());
 			});
 

@@ -60,15 +60,14 @@
         }      //Creates the user in our table where we can store user information
 
         var getCredentials = function () {
-            var deferred = q.defer();
+            //If we have the auth credentials cached then all we need to do is to return the credentials
+            //otherwise, we need to return an error so we can sign in again
 
             if (authCredential == null) {
-                deferred.resolve("Not Authenticated")
+                return "Not Authenticated";
             } else {
-                deferred.resovle(authCredential);
+                return authCredential;
             }
-
-            return deferred.promise;
         }                      //This will return the authentication credentials of the user
         var getUserInformation = function (userId) {
             var deferred = q.defer();
@@ -88,16 +87,33 @@
             return deferred.promise;            
         }            //Returns a promise that will be resolved with the information in the user's table
 
-        var updateUserInformation = function(userId, value){
+        var updateUserInformation = function(value){
             var deferred = q.defer();
 
-            var userPath = 'app_data/users/' + userId;                          //get to the path of the user so we can update their information
+            try {
 
-            firebaseService.updateData(userPath, value).then(function (data) {
-                deferred.resolve(data);
-            }).catch(function(err){
-                deferred.reject(err);
-            });
+                console.log("trying to update user information");
+
+                /*
+                if (userInformation.uid == null) {
+                    console.log("not authenticated");
+                    deferred.reject("not authenticated");
+                }
+                */
+
+                console.log(userInformation);
+                var userPath = 'app_data/users/' + userInformation.uid;                          //get to the path of the user so we can update their information
+
+                firebaseService.updateData(userPath, value).then(function (data) {
+                    deferred.resolve(data);
+                }).catch(function(err){
+                    deferred.reject(err);
+                });
+
+            } catch (err) {
+                console.log("error in update user information");
+                deferred.reject("error in update user information");
+            }
 
             return deferred.promise;
         }
@@ -105,6 +121,8 @@
         return {
             authCarbonChat: authCarbonChat,
             createUser: createUser,
+
+            updateUserInformation: updateUserInformation,
 
             getCredentials: getCredentials,
             getUserInformation: getUserInformation

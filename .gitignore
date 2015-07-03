@@ -69,3 +69,5 @@ carbonchatweb/obj/Debug/carbonchatweb.csproj.FileListAbsolute.txt
 carbonchat/carbonchat.sln
 carbonchatweb/obj/Debug/carbonchatweb.csprojResolveAssemblyReference.cache
 *.suo
+carbonchatweb/carbonchatweb.sln
+*.txt

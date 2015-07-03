@@ -18,7 +18,13 @@
                 <md-option ng-repeat="gender in genderList" value="{{gender}}">{{gender}}</md-option>
             </md-select>
 
-            <md-button class="md-raised md-primary" ng-click="saveProfile()">Savw</md-button>
+            <md-input-container>
+                <label>Add Friends</label>
+                <input ng-model="user.friend" type="email" placeholder="email">
+            </md-input-container>
+
+
+            <md-button class="md-raised md-primary" ng-click="saveProfile()">Save</md-button>
         </form>
 
     </div>

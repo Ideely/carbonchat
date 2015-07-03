@@ -13,8 +13,9 @@
             url: "",
             name: "",
             slogan: ""
-        }
+        };
 
+        /*
         appService.getAppInformation().then(
 		    function (app_info) {
 		        applicationText = app_info;
@@ -26,6 +27,15 @@
 		    }, function (error) {
 		        console.log("getting application info error");
 		    }
+        );
+        */
+
+        authService.getUserInformation(userId).then(
+            function (user_info) {
+
+            }, function (error) {
+                console.log("getting user info error");
+            }
         );
 
         $scope.saveProfile = function () {

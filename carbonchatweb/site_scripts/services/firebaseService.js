@@ -136,7 +136,7 @@
 
 			firebaseToRead = fireRef.child("app_data/users").child(userId);
 			firebaseToRead.once("value", function (snapshot) {
-			    deferred.resolve(data.val());
+			    deferred.resolve(snapshot.val());
 			});
 
             return deferred.promise;

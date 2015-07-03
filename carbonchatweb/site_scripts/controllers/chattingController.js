@@ -1,4 +1,4 @@
-﻿/*
+﻿/*co
     This is the controller that controlls the behavior of the chatting functionality
 */
 
@@ -8,10 +8,14 @@
 
     carbonchatApp.controller('chattingController', ["$scope", "$http", "$q", "authService", "messageService", "appService", "$state", function ($scope, $http, $q, authService, messageService, appService, $state) {
         var q = $q;
+        $scope.credentials = {
+            uid: ""
+        };
         $scope.user = {
             name: "",
             userId: "",
-            gender: ""
+            gender: "",
+            friends: ""
         };
         $scope.message = {
             text: "",
@@ -21,8 +25,32 @@
             location: ""
         };
 
-        authService.getCredentials().then(function (data) { console.log(data.uid); });
-        
+        //get the user's auth credentials from the auth service
+        $scope.credentials = authService.getCredentials();
+        console.log($scope.credentials);
+
+        //get the user's information from the user's table
+        var userInfoPromise = authService.getUserInformation($scope.credentials.uid);
+        userInfoPromise.then(function (data) {
+            console.log(data);
+        }).catch(function (err) {
+            console.log("error getting user information");
+        });
+
+        //Auto complete for user's friends
+        function querySearch(query) {
+            var results = query ? $scope.user.friends.filter(createFilterFor(query)) : [];
+            return results;
+        }
+        function createFilterFor(query) {
+            var lowercaseQuery = angular.lowercase(query);
+
+            return function filterFn(friend) {
+                return (angular.lowercase(friend.name).indexOf(lowercaseQuery) === 0) ||
+                    (angular.lowercase(friend.email).indexOf(lowercaseQuery) === 0);
+            };
+        }
+       
         $scope.sendMessage = function () {
             //Need to save this message to the firebase
 			var deferred = q.defer();

@@ -139,7 +139,7 @@
                 //We need to loop through all of the items in the friend list. Idealy, the friend list is a colleciton of object
                 //that contain a userId and email, and name
                 _.foreach(friendList, function (friend, key) {
-
+                    friendListToSave.friend
                 });
                 
                 firebaseService.updateData(userPath, value).then(function (data) {

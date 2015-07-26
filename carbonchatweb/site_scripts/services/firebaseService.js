@@ -167,7 +167,27 @@
 
         }           //Saves data to the firebaseRef
         var updateData = function (pathList, object) {
+            //This function will update on the parameters in the object at the current location
+            var deferred = q.defer();
 
+            //Always check to ensure that fireRef isn't null
+            if (fireRef == null) {
+                init();
+            }
+
+            try{
+                console.log('in firebase service - about to update');
+
+                //Save the message to the messages table
+                var firebaseRefToUpdate = fireRef;
+                firebaseRefToUpdate = firebaseRefToUpdate.child(pathList);
+                firebaseRefToUpdate.update(object);
+
+                deferred.resolve("success");
+            } catch (err) {
+                deferred.reject("failure");
+            }
+            return deferred.promise;
         }       //This function will take a path and an object and will only update the information 
 
         var createListener = function (path) {
@@ -213,6 +233,7 @@
             getUserInformation: getUserInformation,
 
             writeData: writeData,
+            updateData: updateData,
 
             createListener: createListener,
             readDataOnce: readDataOnce,

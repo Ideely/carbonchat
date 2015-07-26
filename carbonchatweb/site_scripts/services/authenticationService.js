@@ -76,6 +76,7 @@
             if (userInformation == null) {
                 firebaseService.getUserInformation(userId).then(
                     function (userInfo) {
+                        userInformation = userInfo;
                         deferred.resolve(userInfo);
                     }, function (error) {
                         deferred.reject(error);
@@ -89,6 +90,7 @@
 
         var updateUserInformation = function(value){
             var deferred = q.defer();
+            var userPath;
 
             try {
 
@@ -102,16 +104,55 @@
                 */
 
                 console.log(userInformation);
-                var userPath = 'app_data/users/' + userInformation.uid;                          //get to the path of the user so we can update their information
+                userPath = 'app_data/users/' + userInformation.userId;                          //get to the path of the user so we can update their information
+                console.log(userPath);
 
                 firebaseService.updateData(userPath, value).then(function (data) {
+
                     deferred.resolve(data);
-                }).catch(function(err){
+                }).catch(function (err) {
+                    console.log("we caught an error in the firebase update data service: ");
+                    console.log(err);
                     deferred.reject(err);
                 });
 
             } catch (err) {
                 console.log("error in update user information");
+                console.log(err);
+                deferred.reject("error in update user information");
+            }
+
+            return deferred.promise;
+        }
+        var addFriends = function (friendList) {
+            //this function will take the array of friends that the user has chosen and will add them to the user profile
+            var deferred = q.defer();
+            var userPath;
+            var friendListToSave = {};
+
+            try {
+
+                console.log("trying to add friends");
+                userPath = 'app_data/users/' + userInformation.userId + '/users';                          //get to the path of the user so we can update their information
+                console.log(userPath);
+
+                //We need to loop through all of the items in the friend list. Idealy, the friend list is a colleciton of object
+                //that contain a userId and email, and name
+                _.foreach(friendList, function (friend, key) {
+
+                });
+                
+                firebaseService.updateData(userPath, value).then(function (data) {
+                    deferred.resolve(data);
+                }).catch(function (err) {
+                    console.log("we caught an error in the firebase update data service: ");
+                    console.log(err);
+                    deferred.reject(err);
+                });
+
+            } catch (err) {
+                console.log("error in update user information");
+                console.log(err);
                 deferred.reject("error in update user information");
             }
 

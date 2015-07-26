@@ -2,6 +2,10 @@
     var carbonchatApp = angular.module('carbonchatApp');
 
     carbonchatApp.controller('profileController', ["$scope", "$http", "$q", "authService", "appService", "$state", "$timeout", function ($scope, $http, $q, authService, appService, $state, $timeout) {
+        $scope.userCredentials = { };
+
+        $scope.genderList = ["Male", "Female"];
+
         $scope.user = {
             email: "",
             password: "",
@@ -9,29 +13,24 @@
             gender: ''
         };
 
+        $scope.friendsToAdd = [];
+
         $scope.applicationText = {
             url: "",
             name: "",
             slogan: ""
         };
 
-        /*
-        appService.getAppInformation().then(
-		    function (app_info) {
-		        applicationText = app_info;
+        $scope.userCredentials = authService.getCredentials();
+        console.log(authService.getCredentials());
 
-		        $timeout(function () {
-		            $scope.$apply();
-		        });
-
-		    }, function (error) {
-		        console.log("getting application info error");
-		    }
-        );
-        */
-
-        authService.getUserInformation(userId).then(
+        authService.getUserInformation($scope.userCredentials.uid).then(
             function (user_info) {
+                $scope.user = user_info;
+
+                $timeout(function () {
+                    $scope.$apply();
+                });
 
             }, function (error) {
                 console.log("getting user info error");
@@ -44,7 +43,9 @@
 
             saveProfilePromise.then(function (data) {
                 console.log(data);
-
+                return authService.addFriends($scope.friendsToAdd);
+            }).then(function (data) {
+                //The result of the add friends function
                 //change state to go to the chatting state
                 $state.go('chatting');
             });

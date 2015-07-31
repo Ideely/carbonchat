@@ -108,7 +108,6 @@
                 console.log(userPath);
 
                 firebaseService.updateData(userPath, value).then(function (data) {
-
                     deferred.resolve(data);
                 }).catch(function (err) {
                     console.log("we caught an error in the firebase update data service: ");

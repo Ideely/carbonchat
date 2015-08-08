@@ -67,14 +67,17 @@
 
         var createUser = function (email, password) {
             //This function will return a promise that will be resolved with the UID of the new user or rejected with an error code.
-
             var deferred = q.defer();
 
 			//Always check to ensure that the firebase reference isn't null
 			if(fireRef == null){
 				init();
 			}
-			
+
+			console.log('about to create user');
+			console.log('is the firebase null? ');
+			console.log(fireRef);
+
             fireRef.createUser({
                 email: email,
                 password: password

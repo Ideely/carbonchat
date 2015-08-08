@@ -10,7 +10,8 @@
             email: "",
             password: "",
             name: "",
-            gender: ''
+            gender: '',
+            friends: []
         };
 
         $scope.friendsToAdd = [];
@@ -27,6 +28,7 @@
         authService.getUserInformation($scope.userCredentials.uid).then(
             function (user_info) {
                 $scope.user = user_info;
+
 
                 $timeout(function () {
                     $scope.$apply();

@@ -1,0 +1,10 @@
+{
+  "name": "CarbonChatDevice",
+  "version": "0.0.0",
+  "description": "CarbonChatDevice",
+  "main": "app.js",
+  "author": {
+    "name": "Larkin",
+    "email": ""
+  }
+}

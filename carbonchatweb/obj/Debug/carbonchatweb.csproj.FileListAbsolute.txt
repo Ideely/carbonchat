@@ -16,3 +16,9 @@ C:\Users\larki\Documents\carbonchat\carbonchatweb\bin\carbonchatweb.pdb
 C:\Users\larki\Documents\carbonchat\carbonchatweb\obj\Debug\carbonchatweb.csprojResolveAssemblyReference.cache
 C:\Users\larki\Documents\carbonchat\carbonchatweb\obj\Debug\carbonchatweb.dll
 C:\Users\larki\Documents\carbonchat\carbonchatweb\obj\Debug\carbonchatweb.pdb
+D:\Ideely\carbonchat\carbonchatweb\bin\carbonchatweb.dll.config
+D:\Ideely\carbonchat\carbonchatweb\bin\carbonchatweb.dll
+D:\Ideely\carbonchat\carbonchatweb\bin\carbonchatweb.pdb
+D:\Ideely\carbonchat\carbonchatweb\obj\Debug\carbonchatweb.csprojResolveAssemblyReference.cache
+D:\Ideely\carbonchat\carbonchatweb\obj\Debug\carbonchatweb.dll
+D:\Ideely\carbonchat\carbonchatweb\obj\Debug\carbonchatweb.pdb

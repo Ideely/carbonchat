@@ -32,6 +32,7 @@
   <ItemGroup>
     <Compile Include="app.js" />
     <Compile Include="module-authenticate.js" />
+    <Compile Include="module-image.js" />
     <Compile Include="module-messages.js" />
     <Compile Include="module-print-thermal.js" />
     <Content Include="authInformation.json" />

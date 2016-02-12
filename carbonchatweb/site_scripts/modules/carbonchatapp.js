@@ -7,7 +7,8 @@
     var carbonchatApp = angular.module('carbonchatApp', [
         'ui.router',
         'firebase',
-        'ngMaterial'
+        'ngMaterial',
+        'ngRoute'                      //routing
     ]);
 
 })();

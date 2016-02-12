@@ -5,12 +5,16 @@
 var q = require(q);
 var SerialPort = require('serialport').SerialPort;
 var Printer = require('thermalprinter');
+var Image = require('./module-image.js');
 var serialPort = new SerialPort('/dev/ttyUSB0', { baudrate: 19200 });
 var printer;
+var imageMaxWidth;
 
 //This function will initialize our thermal print module, setting the settings
 exports.init = function init() {
     var printer = new Printer(serialPort);
+
+    imageMaxWidth = 384;
 }
 
 //This will print a message from that was taken received
@@ -57,8 +61,11 @@ exports.printImage = function printImage(path){
 
     if (printer != null) {
         printer.on('ready', function () {
-            printer.printImage(message);
+            Image.readyImage(path, imageMaxWidth).then(function (outputPath) {
+                printer.printImage(outputPath);
+            });            
         });
+
         success = "success";
         process.exit();                 //Assume this free's up the printer, but I'm not really sure
         deferred.resolve(success);

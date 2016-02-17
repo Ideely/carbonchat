@@ -10,6 +10,11 @@
   "dependencies": {
     "firebase": "^2.2.7",
     "q": "^1.4.1",
-    "thermalprinter": "1.4.28"
+    "thermalprinter": "^1.4.28",
+    "async": "^1.5.2",
+    "serialport": "^2.0.6",
+    "thermalprinter": "^0.3.8",
+    "sharp": "^0.12.2",
+    "path": "^0.12.7"
   }
 }

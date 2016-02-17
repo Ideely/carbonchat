@@ -4,15 +4,16 @@
  * The authentication module, which will authenticate the user with the firebase server from an authentication.json file
  * */
 
-var q = require('q');
+    var q = require('q');
     var Firebase = require('firebase');
     var firebaseRef;
-    var fs = requite('fs');
+    var fs = require('fs');
+    var path = require('path');
     var authFilePath;
     
     //The initialization of our firebase object.
     exports.init = function (firebaseObj) {
-        authFilePath = "authInformation.json";
+        authFilePath = "./authInformation.json";
         firebaseRef = firebaseObj;					//Set the firebase reference
     }       //Will perform authentication, get message root directory
 
@@ -21,35 +22,40 @@ var q = require('q');
         var error;
         var deviceId;                       //The unique Id of the devicre
         var ownerId;                        //The userId of the owner of the device
+        
+        console.log('Module-authenticate.js: Authenticate function: entered');
 
         try {
 
             getDeviceInformation().then(function (deviceInformation) {
+                
+                console.log('Module-authenticate.js: authenticate : got device information');
+                console.log(deviceInformation);
 
                 deviceId = deviceInformation;
                 
-                firebaseRef.child('/devices/' + deviceId + '/');
+                firebaseRef = firebaseRef.child('app_data/devices/' + deviceId);
+                
+                console.log(firebaseRef.toString());
 
                 //get userId of the owner
                 firebaseRef.once('value', function (snapshot) {
-                    ownerId = snapshot.userId;
-
-                    //set the new firebaseRef, which is to the user's account
-                    firebaseRef.parent().parent().child('/users/' + ownerId);
-
-                    q.resovle(firebaseRef);
+                    deferred.resolve(
+                        snapshot.val().owner
+                    );
                 });
-
             });
 
         } catch (err) {
+            console.log('module-authenticate: error before return');
+            console.log(err);
             error = err.message;
-            return deferred.reject(error);
+            deferred.reject(error);
         }
         
         return deferred.promise;
     }   //This is our authentication function
-       
+    
     function getDeviceInformation() {
         var deferred = q.defer();
         var deviceInformation;
@@ -59,21 +65,52 @@ var q = require('q');
             
             existFileDefer = q.defer();                              //create a defer object that will resolve when if the file exists
             readFileDefer = q.defer();                               //create a deefer object that will resolve after reading the file contents
-            fs.exists(authFilePath, existFileDefer.resolve());
             
-            existFileDefer.promise.then(function (exists) {
-                if (!exists) {
+            try {
+                fs.stat(path.resolve(__dirname, authFilePath), function (err, stats) {
+                    if (!err)
+                        existFileDefer.resolve(stats);
+                    else
+                        existFileDefer.reject(err);
+                });
+            } catch (ex) {
+                console.log('Got an error reading the file');
+                console.log(ex);
+            }
+           
+            existFileDefer.promise.then(function (stats) {
+                if (!stats) {
+                    console.log('Module-authenticate.js: getDevice Information : seeing if file exists');
+                    console.log("authentication file doesn't exist");
                     throw "authentication file doesn't exist";
                 } else {
-                    fs.readFile(authFilePath, readFileDefer.resolve(read));
+                    fs.readFile(path.resolve(__dirname, authFilePath), 'utf8', function (err, data) {
+                        if (!err)
+                            readFileDefer.resolve(data);
+                        else
+                            readFileDefer.reject(err);
+                    });
                 }
+            }, function (error) {
+                console.log('Module-authenticate.js: getDevice Information : seeing if file exists');
+                console.log('Module-authenticate.js: getDevice Information : exception thrown');
+                console.log(error);
             });
             readFileDefer.promise.then(function (read) {
                 if (!read) {
+                    console.log('Module-authenticate.js: getDevice Information : did not get device information');
+                    console.log("couldn't read authentication file");
                     throw "couldn't read authentication file";
                 } else {
-                    deferred.resolve(JSON.parse(read).deviceInformation);			//Send back the completed promise to show that we resolved correctly
+                    read = read.substring(1, read.length);                                      //Removes first character, which is BOM (determines endiness)
+                    console.log(read);
+                    console.log(JSON.parse(read).deviceInformation.deviceSerial);
+                    deferred.resolve(JSON.parse(read).deviceInformation.deviceSerial);			//Send back the completed promise to show that we resolved correctly
                 }
+            }, function (err) {
+                console.log('Module-authenticate.js: getDevice Information : did not get device information');
+                console.log('Module-authenticate.js: getDevice Information : error thrown');
+                console.log(err);
             });
         } catch (err) {
             deferred.reject(err.message);

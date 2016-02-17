@@ -1,11 +1,11 @@
 ﻿{
     "deviceInformation": {
-        "deviceSerial": "123456789"
+        "deviceSerial": "123456879"
     },
     "networkInformation": {
-        networks: [
+        "networks": [
             {
-                "networkName": "japan2",
+                "networkName": "japan1",
                 "networkPassword": "sdfsdfsdfsdf"
             },
             {

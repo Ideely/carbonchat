@@ -2,16 +2,21 @@
  * The print module, lets make this work for the thermal printer that we bought.
  * */
 
-var q = require(q);
-var SerialPort = require('serialport').SerialPort;
+var q = require('q');
+var SerialPort = require('SerialPort').SerialPort;
 var Printer = require('thermalprinter');
 var Image = require('./module-image.js');
-var serialPort = new SerialPort('/dev/ttyUSB0', { baudrate: 19200 });
+var fs = require('fs');
+
+//var serialPort = new SerialPort('/dev/ttyUSB0', { baudrate: 19200 });
 var printer;
 var imageMaxWidth;
 
 //This function will initialize our thermal print module, setting the settings
 exports.init = function init() {
+    
+    console.log('Module-print-thermal.js: Init function: entered');
+
     var printer = new Printer(serialPort);
 
     imageMaxWidth = 384;
@@ -25,22 +30,53 @@ exports.init = function init() {
 //image: a path to the image, will be deleted after it has been printed. This parameter is optional
 //timestamp: human readable, so June 6th, 12:06PM
 //location: City, Country (Lat, Lon)
-exports.printMessage = function printMessage(from, conversation, message, image, timestamp, location) {
+exports.printMessage = function printMessage(message, prevMessageId) {
     var deferred = q.defer();
     var success = "success";
     var error;
+    
+    var from;
+    var message_text;
+    var images = [];
+    var timestamp;
+    var location;
+
+    try {
+        from = message.from;
+        message_text = message.message;
+        timestamp = message.timestamp;
+        location = message.location;
+
+        for (var count = 0; count < message.attachments.length; count++) {
+            
+            var base64Data = message.attachments[count].replace(/^data:image\/png;base64,/, "");
+            
+            fs.writeFile(message.attachments[count].name + '.' + message.attachments[count].type, base64Data, 'base64', function (err) {
+                if (err) {
+                    console.log(err);
+                    images.push(message.attachments[count].name + '.' + message.attachments[count].type);   //add the name of the file to the attachments
+                }
+            });
+        }
+    } catch(ex)  {
+
+    }
 
     if (printer != null) {
         //print the message
         //We will use the format: 
         //converation: from
         //message
-        //image (optional)
+        //images (optional)
         //location timestamp
+
         printline(conversation + " " + from);
         printline(message);
-        if (image != null)
-            printImage(image);
+
+        for (var count = 0; count < images.length; count++) {
+            printImage(images[count])            ;
+        }
+
         printline(location + " " + timestamp);
 
         deferred.resolve(success);

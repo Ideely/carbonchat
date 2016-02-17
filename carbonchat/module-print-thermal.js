@@ -85,6 +85,7 @@ exports.printMessage = function printMessage(message, prevMessageId) {
         var error = "Printer not initialized";
         deferred.reject(error);
     }
+    
 
     return deferred.promise;
 }

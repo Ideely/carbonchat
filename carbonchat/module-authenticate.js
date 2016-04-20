@@ -1,8 +1,8 @@
 ﻿(function () {
     
     /*
- * The authentication module, which will authenticate the user with the firebase server from an authentication.json file
- * */
+     * The authentication module, which will authenticate the user with the firebase server from an authentication.json file
+     * */
 
     var q = require('q');
     var Firebase = require('firebase');

@@ -1,7 +1,7 @@
 ﻿(function () {
     var carbonchatApp = angular.module('carbonchatApp');
 
-    carbonchatApp.controller('landingController', ["$scope", "$http", "$q", "authService", "messageService", "appService", "$state", "$timeout", function ($scope, $http, $q, authService, messageService, appService, $state, $timeout) {
+    carbonchatApp.controller('landingController', ["$scope", "$http", "$q", "authenticationService", "messageService", "appService", "$state", "$timeout", function ($scope, $http, $q, authenticationService, messageService, appService, $state, $timeout) {
         $scope.user = {
             email: "",
             password: ""
@@ -27,7 +27,7 @@
 		
         $scope.authUser = function() {
 			//This will authenticate the user assuming they have entered email and password
-            var authData = authService.authCarbonChat($scope.user.email, $scope.user.password);
+            var authData = authenticationService.authCarbonChat($scope.user.email, $scope.user.password);
 
             authData.then(function (authData) {
                 console.log(authData);

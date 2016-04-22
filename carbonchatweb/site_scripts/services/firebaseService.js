@@ -144,6 +144,23 @@
 
             return deferred.promise;
         }            //Returns a promise that will be resolved with the information in the user's table
+        var getUserMessages = function (userId) {
+            //This will read the information about the user from the firebase table
+            var deferred = q.defer();
+            var firebaseToRead;
+
+            //Always check to ensure that the firebase reference isn't null
+            if (fireRef == null) {
+                init();
+            }
+
+            console.log(userId);
+
+            firebaseToRead = fireRef.child("app_data/users").child(userId).child('/messages');
+            deferred.resolve(firebaseToRead);
+            
+            return deferred.promise;
+        }
 
         var writeData = function (pathList, object) {
             //This will create a new child node at the specified location and will then write data to that location and will return a reference
@@ -234,6 +251,7 @@
             createUser: createUser,
 
             getUserInformation: getUserInformation,
+            getUserMessages: getUserMessages,
 
             writeData: writeData,
             updateData: updateData,

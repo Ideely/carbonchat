@@ -4,28 +4,15 @@
         <br />
 
         <form>
-            <md-input-container>
-                <label>To</label>
-                <input type="text" placeholder="to" ng-model="message.to" required /> <br />
-            </md-input-container>
-
-            <md-chips ng-model="message.selectedRecipients" md-autocomplete-snap md-require-match>
-                <md-autocomplete md-selected-item="selectedItem"
-                                 md-search-text="searchText"
-                                 md-items="item in querySearch(searchText)"
-                                 md-item-text="item.name"
-                                 placeholder="Search for a friend">
-                    <span md-highlight-text="searchText">{{item.name}} : {{item.email}}</span>
-                </md-autocomplete>
-                <md-chip-template>
-                    <span>
-                        <strong>{{$chip.name}}</strong>
-                        <em>({{$chip.email}})</em>
-                    </span>
-                </md-chip-template>
-            </md-chips>
-
-
+            <md-contact-chips ng-model="message.to"
+                                md-contacts="querySearch($query)"
+                                md-contact-name="name"
+                                md-contact-image="profilepic"
+                                md-contact-email="email"
+                                md-require-match="true"
+                                md-highlight-flags="i"
+                                placeholder="To">
+            </md-contact-chips>
 
             <md-input-container>
                 <label>message</label>
@@ -33,7 +20,7 @@
             </md-input-container>
 
             <md-button class="md-raised md-primary" ng-click="sendMessage()">Send</md-button>
-        </form>
+</form>
 
     </div>
 </div>

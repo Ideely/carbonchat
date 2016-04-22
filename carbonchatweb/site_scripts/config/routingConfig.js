@@ -15,9 +15,9 @@
             })
           .state('chatting', {
               url: '/chat',
-              
+
               views: {
-                  banner:{
+                  banner: {
                       templateUrl: '/templates/banner.html',
                       controller: 'bannerController'
                   },
@@ -48,32 +48,26 @@
                 }
             }
         });
-        //$urlRouterProvider.otherwise('/landing');
     });
 
     //Check if the user is authenticated, if not, send to login screen
     carbonchatApp.run(['$route', '$rootScope', "$location", 'authenticationService', '$state',
-        function ($route, $rootScope, $location, authenticationService, $state, $scope) {
-            $rootScope.$on('landing', function (event, data) {
-                $location.path("/");
-            });
-
-            $rootScope.$on('/', function (event, data) {
-                $location.path("/landing");
-            });
-
+        function ($route, $rootScope, $location, $state, $scope) {
+            
             $rootScope.$on('logout', function (event, data) {
                 $location.path("/landing");
             });
 
             $rootScope.$on("$stateChangeStart", function (event, next, curent) {
 
+                /*
                 console.log('Do we have a token saved?');
                 console.log(authenticationService.isLoggedIn());
 
                 if (authenticationService.isLoggedIn() == false) {
                     $location.path("/landing");
                 }
+                */
             });
 
         }]);

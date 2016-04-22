@@ -7,7 +7,7 @@
 
     var carbonchatApp = angular.module('carbonchatApp');
 
-    carbonchatApp.service('authService', function ($http, $q, firebaseService) {
+    carbonchatApp.service('authenticationService', function ($http, $q, firebaseService) {
         var q = $q;
         var authCredential = null;                                                //The authentication credentials of the user
         var userInformation = null;                                         //The user's information

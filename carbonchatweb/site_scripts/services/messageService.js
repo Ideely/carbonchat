@@ -8,11 +8,11 @@
 
     var carbonchatApp = angular.module('carbonchatApp');
 
-    carbonchatApp.service('messageService', ["$http", "$q", "firebaseService", function ($http, $q, firebaseService ) {
+    carbonchatApp.service('messageService', ["$http", "$q", "firebaseService", "_", function ($http, $q, firebaseService, _ ) {
         var q = $q;
         //var firebaseRef = null;
         //var firebaseObj = null;
-        //var location = "https://carbonchat.firebaseio.com/";
+        var location = "https://carbonchat.firebaseio.com/";
 
         //This is the init function
         function init(){
@@ -44,12 +44,21 @@
             return deferrd.promise;
         }
         var createConversationListener = function (conversation) { }
-        var writeMessage = function (message) { 
+        var writeMessage = function (userId, message) { 
 			//This will call the firebase service to write data to the database
 			var deferred = q.defer();
 			var writeDataPromise;
 			var recipientsPromise;
 
+			console.log('userId: ');
+			console.log(userId);
+
+			messages = firebaseService.getUserMessages(userId).then(function (messages) {
+			    messages.$add(message);
+			    messages.$save();
+			});
+
+            /*
 			console.log('writing message to table: ' + message.text);
 			writeDataPromise = firebaseService.writeData('app_data/messages', message);     //Write the message to the messages table
 			writeDataPromise.then(function (messageId) {
@@ -72,7 +81,8 @@
 			}, function(error){
 				deferred.reject(error);
 			});
-			
+			*/
+
 			return deferred.promise;
 		}
         

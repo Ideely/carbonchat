@@ -5,7 +5,7 @@
 (function () {
 
     var carbonchatApp = angular.module('carbonchatApp');
-    carbonchatApp.controller('bannerController', [ "$scope", "$http", "$q", "authService", "messageService", "appService", "$state", "$timeout", function ($scope, $http, $q, authService, messageService, appService, $state, $timeout) {
+    carbonchatApp.controller('bannerController', ["$scope", "$http", "$q", "authenticationService", "messageService", "appService", "$state", "$timeout", function ($scope, $http, $q, authenticationService, messageService, appService, $state, $timeout) {
         $scope.site = {
             title: "",
             slogan: "" 

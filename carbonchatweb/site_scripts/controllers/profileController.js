@@ -1,7 +1,7 @@
 ﻿(function () {
     var carbonchatApp = angular.module('carbonchatApp');
 
-    carbonchatApp.controller('profileController', ["$scope", "$http", "$q", "authService", "appService", "$state", "$timeout", function ($scope, $http, $q, authService, appService, $state, $timeout) {
+    carbonchatApp.controller('profileController', ["$scope", "$http", "$q", "authenticationService", "appService", "$state", "$timeout", function ($scope, $http, $q, authenticationService, appService, $state, $timeout) {
         $scope.userCredentials = { };
 
         $scope.genderList = ["Male", "Female"];
@@ -22,10 +22,10 @@
             slogan: ""
         };
 
-        $scope.userCredentials = authService.getCredentials();
-        console.log(authService.getCredentials());
+        $scope.userCredentials = authenticationService.getCredentials();
+        console.log(authenticationService.getCredentials());
 
-        authService.getUserInformation($scope.userCredentials.uid).then(
+        authenticationService.getUserInformation($scope.userCredentials.uid).then(
             function (user_info) {
                 $scope.user = user_info;
 
@@ -41,11 +41,11 @@
 
         $scope.saveProfile = function () {
             //This will authenticate the user assuming they have entered email and password
-            var saveProfilePromise = authService.updateUserInformation({ email: $scope.user.email, password: $scope.user.password, name: $scope.user.name, gender: $scope.user.gender });
+            var saveProfilePromise = authenticationService.updateUserInformation({ email: $scope.user.email, password: $scope.user.password, name: $scope.user.name, gender: $scope.user.gender });
 
             saveProfilePromise.then(function (data) {
                 console.log(data);
-                return authService.addFriends($scope.friendsToAdd);
+                return authenticationService.addFriends($scope.friendsToAdd);
             }).then(function (data) {
                 //The result of the add friends function
                 //change state to go to the chatting state

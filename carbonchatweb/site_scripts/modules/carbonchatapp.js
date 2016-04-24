@@ -8,7 +8,8 @@
         'ui.router',
         'firebase',
         'ngMaterial',
-        'ngRoute'                      //routing
+        'ngRoute',                      //routing
+        'flow'
     ]);
 
 })();

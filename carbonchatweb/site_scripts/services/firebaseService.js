@@ -8,9 +8,13 @@
 
     var carbonchatApp = angular.module('carbonchatApp');
 
-    carbonchatApp.service('firebaseService', function ($http, $q, $firebaseObject) {
+    carbonchatApp.service('firebaseService', function ($http, $q, $firebaseObject, $firebaseArray) {
         var q = $q;
-        var firebaseLocation = "https://carbonchat.firebaseio.com/";		
+
+        var firebaseLocation = "https://carbonchat.firebaseio.com/";
+        var userLocationPrefix = "/app_data/users";
+        var messageLocationPrefix = "/messages"
+
 		var fireRef;
 		var fireRefObj;				//Need to understand how this is different from the fireRef
 		
@@ -154,10 +158,8 @@
                 init();
             }
 
-            console.log(userId);
-
-            firebaseToRead = fireRef.child("app_data/users").child(userId).child('/messages');
-            deferred.resolve(firebaseToRead);
+            firebaseToRead = fireRef.child(userLocationPrefix).child(userId).child(messageLocationPrefix);
+            deferred.resolve($firebaseArray(firebaseToRead));
             
             return deferred.promise;
         }

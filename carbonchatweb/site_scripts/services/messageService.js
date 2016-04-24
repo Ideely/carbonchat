@@ -10,15 +10,6 @@
 
     carbonchatApp.service('messageService', ["$http", "$q", "firebaseService", "_", function ($http, $q, firebaseService, _ ) {
         var q = $q;
-        //var firebaseRef = null;
-        //var firebaseObj = null;
-        var location = "https://carbonchat.firebaseio.com/";
-
-        //This is the init function
-        function init(){
-            //firebaseRef = new Firebase(location).child("app_data");
-            //firebaseObj = firebaseRef;
-        }
 
 		var gotNewMessage = function(userId){
 			//Will return a promise that will be fulfilled after being returned a message, then will be called again
@@ -35,61 +26,25 @@
 			
 			return deferred.promise;
 		}
-        var readUserMessagesByConversation = function (conversation) {
+		var writeMessage = function (userId, message) {
+
             var deferred = q.defer();
 
-            //read the first message from the conversation and add it to the 
-			//firebaseService.
-
-            return deferrd.promise;
-        }
-        var createConversationListener = function (conversation) { }
-        var writeMessage = function (userId, message) { 
-			//This will call the firebase service to write data to the database
-			var deferred = q.defer();
 			var writeDataPromise;
 			var recipientsPromise;
-
-			console.log('userId: ');
-			console.log(userId);
-
+            
+            //Get an array of messages that the user has, add the message that was passed in, and save
 			messages = firebaseService.getUserMessages(userId).then(function (messages) {
 			    messages.$add(message);
 			    messages.$save();
+
+			    deferred.resolve('success');
 			});
-
-            /*
-			console.log('writing message to table: ' + message.text);
-			writeDataPromise = firebaseService.writeData('app_data/messages', message);     //Write the message to the messages table
-			writeDataPromise.then(function (messageId) {
-                
-			    console.log('message created in table with id: ' + messageId);
-
-                //Then we need to save a reference to each 
-			    _.foreach(message.to, function (recipient, key) {
-			        console.log('writing reference at user: ' + recipient);
-
-			        var promise = firebaseService.writeData('app_data/users/' + recipient + '/messages', { from: message.from, messageId: messageId});
-			        recipientsPromise.push(promise);
-			    });
-
-			    //Find when all the promises have been completed
-			    q.all(recipientsPromise).then(function (data) {
-			        deferred.resolve("success");
-			    });
-
-			}, function(error){
-				deferred.reject(error);
-			});
-			*/
 
 			return deferred.promise;
 		}
         
         return {
-            readUserMessagesByConversation: readUserMessagesByConversation,
-            createConversationListener: createConversationListener,
-
             writeMessage: writeMessage
         }
     }]);

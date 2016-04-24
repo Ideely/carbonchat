@@ -19,6 +19,13 @@
                 <input type="text" placeholder="message" ng-model="message.text" required>
             </md-input-container>
 
+            <div flow-init
+                 flow-files-added="addedFiles($files)">
+                <div style="height: 400px; border:dashed;" flow-drop>
+                    <img ng-model="message.attachment" style="max-width: 300px; max-height: 300px;" flow-img="$flow.files[0]" />
+                </div>
+            </div>
+
             <md-button class="md-raised md-primary" ng-click="sendMessage()">Send</md-button>
 </form>
 

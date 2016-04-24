@@ -22,11 +22,13 @@
             to: [],
             timestamp: "",
             from: "",
-            location: ""
+            location: "",
+            attachments: []
         };
 
         var cachedQuery, lastSearch;
 
+        //For autocomplete for the recipients of the message
         function querySearch(criteria) {
 
             console.log($scope.user.friends);
@@ -43,7 +45,6 @@
 
             return cachedQuery ? results : [];
         }
-
         function createFilterFor(query) {
             var lowercaseQuery = angular.lowercase(query);
 
@@ -67,25 +68,72 @@
             console.log("error getting user information");
         });
 
-        $scope.sendMessage = function () {
+        //Create an attachment that will be send with the file
+        var addedFiles = function (files) {
+
+            //Add the base64 representation of the image to the message
+            angular.forEach(files, function (flowFile, i) {
+                var fileReader = new FileReader();
+
+                fileReader.onload = function (event) {
+                    var uri = event.target.result;
+                    var type = flowFile.file.type;
+                    var name = flowFile.file.name;
+
+                    createAttachment(uri, type, name);
+                    //$scope.message.attachments.push(uri);
+                };
+                fileReader.readAsDataURL(flowFile.file);
+            });
+        };
+        var createAttachment = function (attachmentData, attachmentType, attachmentName) {
+            //We need to save the type of image and the data
+            var attachment = {
+                data: "",
+                type: "",
+                name: ""
+            };
+
+            //save the relavent data
+            attachment.data = attachmentData;
+            attachment.type = attachmentType;
+            attachment.name = attachmentName;
+
+            //Add the attachment to the message
+            $scope.message.attachments.push(attachment);
+        };
+
+        //Saving the message to the database
+        var sendMessage = function () {
             //Need to save this message to the firebase
-			var deferred = q.defer();
-			var messageSavePromise;
-			
+            var deferred = q.defer();
+            var messageSavePromise;
+
             //Populate the rest of the message attributes
-			$scope.message.from = $scope.user.userId;
+            $scope.message.from = $scope.user.userId;
 
             console.log($scope.message)
+
             messageSavePromise = messageService.writeMessage($scope.user.userId, $scope.message);
-			messageSavePromise.then(
-				function(data){
-					deferred.resolve("success");
+            messageSavePromise.then(
+				function (data) {
+				    
+                    //Check our result
+				    if (data.indexOf('Success') > -1) {
+				        deferred.resolve("success");
+				    } else {
+				        deferred.resolve("Error");
+				    }
 				}
 			);
-			
-			return deferred.promise;
-		}
+
+            return deferred.promise;
+        }
+
+        //Mapping the functions
+        $scope.sendMessage = sendMessage;
         $scope.querySearch = querySearch;
+        $scope.addedFiles = addedFiles;
 
     }]);
 

@@ -7,12 +7,12 @@
 
     var carbonchatApp = angular.module('carbonchatApp');
 
-    carbonchatApp.service('authenticationService', function ($http, $q, firebaseService) {
+    carbonchatApp.service('authenticationService', function ($http, $q, firebaseService, $window) {
         var q = $q;
         var authCredential = null;                                                //The authentication credentials of the user
         var userInformation = null;                                         //The user's information
 
-        var authCarbonChat = function (email, password) {
+        var authCarbonChatWithPassword = function (email, password) {
             //This function will return a promose that will be resolved if the user is authenticated and will
             //be rejected with a message indicating why,
             var deferred = q.defer();
@@ -21,7 +21,7 @@
 
             firebaseService.authCarbonChat(email, password).then(
 				function (authData) {
-				    authCredential = authData;
+				    storeAuthData(authData);
 					deferred.resolve(authData);
 				}, function(error){
 					deferred.reject(error);
@@ -30,6 +30,38 @@
             return deferred.promise;
 
         }       //this will attempt to authenticate the user via the carbonchat authwithpassword 
+        var authCarbonChatWithJWT = function (jwt) {
+            //This function will return a promose that will be resolved if the user is authenticated and will
+            //be rejected with a message indicating why,
+            var deferred = q.defer();
+
+            console.log('trying to authenticate');
+
+            firebaseService.authWithJWT(jwt).then(
+				function (authData) {
+				    storeAuthData(authData);
+				    deferred.resolve(authData);
+				}, function (error) {
+				    deferred.reject(error);
+				});
+
+            return deferred.promise;
+
+        }   //Will attempt to authenticate the user via the carbonchat auth function
+        var isAuthenticated = function () {
+            if ($window.sessionStorage.accessToken) {
+                return $window.sessionStorage.accessToken;
+            } else {
+                return null;
+            }
+        }   //Will check session storage for a token for the user to authenticate with
+        var storeAuthData = function (authData) {
+            //Store the user's authentication data
+            authCredential = authData;
+
+            //Store the JWT
+            $window.sessionStorage.accessToken = authData.token;
+        }   //This will store the authentication data we've received and will store the JWT token in web storage
 
         var createUser = function (email, password) {
             //This function will return a promise that will be resolved with the UID of the new user or rejected with an error code.
@@ -159,9 +191,12 @@
         }
 
         return {
-            authCarbonChat: authCarbonChat,
-            createUser: createUser,
+            authCarbonChatWithPassword: authCarbonChatWithPassword,
+            authCarbonChatWithJWT: authCarbonChatWithJWT,
+            isAuthenticated: isAuthenticated,
+            storeAuthData: storeAuthData,
 
+            createUser: createUser,
             updateUserInformation: updateUserInformation,
 
             getCredentials: getCredentials,

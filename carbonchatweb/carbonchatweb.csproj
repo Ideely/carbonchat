@@ -67,7 +67,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="index.html" />
+    <Content Include="resources\icons\diagram.svg" />
+    <Content Include="resources\icons\medical.svg" />
+    <Content Include="resources\icons\school.svg" />
+    <Content Include="resources\icons\science.svg" />
     <Content Include="resources\scripts\lodash.js" />
+    <Content Include="resources\scripts\ng-flow-standalone.min.js" />
     <Content Include="resources\styles\site.css" />
     <Content Include="site_scripts\config\appRun.js" />
     <Content Include="site_scripts\config\routingConfig.js" />

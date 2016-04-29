@@ -114,7 +114,7 @@
 
             console.log($scope.message)
 
-            messageSavePromise = messageService.writeMessage($scope.user.userId, $scope.message);
+            messageSavePromise = messageService.writeMessage($scope.message);
             messageSavePromise.then(
 				function (data) {
 				    

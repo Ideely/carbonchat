@@ -3,7 +3,7 @@
  * */
 (function(){
     var q = require('q');
-    var SerialPort = require('SerialPort').SerialPort;
+    var SerialPort = require('serialport').SerialPort;
     var Printer = require('thermalprinter');
     var Image = require('./module-image.js');
     var fs = require('fs');

@@ -68,6 +68,44 @@
             return deferred.promise;
 
         }       //this will attempt to authenticate the user via the carbonchat authwithpassword 
+        var authWithJWT = function (jwt) {
+            //This function will return a promose that will be resolved if the user is authenticated and will
+            //be rejected with a message indicating why,
+            var deferred = q.defer();
+
+            console.log('trying to authenticate with jwt: ' + jwt);
+
+            //Always check to ensure that fireRef is defined
+            if (fireRef == null) {
+                init();
+            }
+
+            fireRef.auth(jwt, function (error, authData) {
+                if (error) {
+                    console.log("Login Failed!", error);
+
+                    if (error.message.indexOf("not exist") > -1) {
+                        console.log("need to create a user");
+
+                        createUser(fireRef, email, password).then(function (error, authData) {
+                            if (error) {
+                                deferred.reject(error);
+                            } else {
+                                deferred.resolve(authData);
+                            }
+                        });
+                    } else {
+                        authCredentials = null;
+                        deferred.reject(error);
+                    }
+                } else {
+                    console.log("Authenticated successfully with payload:");//, authData);
+                    deferred.resolve(authData);
+                }
+            });
+
+            return deferred.promise;
+        }
 
         var createUser = function (email, password) {
             //This function will return a promise that will be resolved with the UID of the new user or rejected with an error code.
@@ -250,6 +288,7 @@
 		
         return {
             authCarbonChat: authCarbonChat,
+            authWithJWT: authWithJWT,
             createUser: createUser,
 
             getUserInformation: getUserInformation,

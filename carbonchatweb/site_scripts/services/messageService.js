@@ -26,19 +26,23 @@
 			
 			return deferred.promise;
 		}
-		var writeMessage = function (userId, message) {
+		var writeMessage = function (message) {
 
             var deferred = q.defer();
 
 			var writeDataPromise;
 			var recipientsPromise;
             
-            //Get an array of messages that the user has, add the message that was passed in, and save
-			messages = firebaseService.getUserMessages(userId).then(function (messages) {
-			    messages.$add(message);
-			    messages.$save();
+		    //We need to save this message into all of the recipients messages list
+			angular.forEach(message.to, function (recipient, key) {
 
-			    deferred.resolve('success');
+			    //Get an array of messages that the user has, add the message that was passed in, and save
+			    messages = firebaseService.getUserMessages(recipient.id).then(function (messages) {
+			        messages.$add(message);
+			        messages.$save();
+
+			        deferred.resolve('success');
+			    });
 			});
 
 			return deferred.promise;
